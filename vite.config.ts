@@ -1,15 +1,15 @@
 import path from 'path';
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig, loadEnv, ConfigEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 
-export default defineConfig(({ mode }) => {
-    // 1. Load all environment variables (including those starting with VITE_)
+// https://vitejs.dev/config/
+export default defineConfig(({ mode }: ConfigEnv) => {
+    // Load all environment variables
     const env = loadEnv(mode, process.cwd(), '');
-
-    // 2. Extract the key using the correct prefix (VITE_)
     const GEMINI_API_KEY_VALUE = env.VITE_GEMINI_API_KEY;
 
     return {
+        base: './', // <--- fixes blank page on Vercel
         server: {
             port: 5173,
             host: '0.0.0.0',
@@ -27,14 +27,13 @@ export default defineConfig(({ mode }) => {
                 },
             },
         },
-        // 3. Inject the variable directly into the correct import.meta.env location
         define: {
             'import.meta.env.VITE_GEMINI_API_KEY': JSON.stringify(GEMINI_API_KEY_VALUE),
         },
         resolve: {
             alias: {
                 '@': path.resolve(__dirname, '.'),
-            }
-        }
+            },
+        },
     };
 });
