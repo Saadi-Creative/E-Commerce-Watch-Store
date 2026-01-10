@@ -1,5 +1,6 @@
 // src/App.tsx
 import React, { Suspense } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
 import { ToastProvider } from './components/Toast';
@@ -49,6 +50,7 @@ const App: React.FC = () => {
     <ToastProvider>
       <CartProvider>
         <HashRouter>
+          <Analytics />
           <Suspense fallback={<PageLoader />}>
             <Routes>
 
