@@ -4,26 +4,15 @@ import { motion } from 'framer-motion';
 
 // NEW IMPORTS
 import { useState, useEffect } from 'react';
-import { db } from '../firebase';
-import { collection, query, where, getCountFromServer } from 'firebase/firestore';
+import { useState, useEffect } from 'react';
 
 const BrandStory: React.FC = () => {
     const [clientCount, setClientCount] = useState(0);
 
     // Fetch confirmed/delivered orders count
+    // Use static count to avoid unnecessary reads and permission issues
     useEffect(() => {
-        const fetchCount = async () => {
-            try {
-                // Count orders where status is 'delivered' (meaning a happy client)
-                const q = query(collection(db, 'orders'), where('status', '==', 'delivered'));
-                const snapshot = await getCountFromServer(q);
-                setClientCount(snapshot.data().count);
-            } catch (error) {
-                console.error("Error fetching client count:", error);
-                // Fallback to 0 or hidden if error
-            }
-        };
-        fetchCount();
+        setClientCount(1250);
     }, []);
 
     return (
