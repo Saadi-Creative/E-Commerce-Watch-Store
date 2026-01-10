@@ -46,7 +46,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             body: formData,
         });
 
-        const data = await response.json();
+        interface ImgBBResponse {
+            success: boolean;
+            data: {
+                url: string;
+            };
+            error?: {
+                message: string;
+            };
+        }
+
+        const data = await response.json() as ImgBBResponse;
 
         if (data.success) {
             res.status(200).json({ success: true, data });
