@@ -6,7 +6,8 @@
  */
 
 // Use VITE_API_BASE from env or default to localhost
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:3000';
+// Use relative path for Vercel serverless functions
+// const API_BASE = '';
 
 /**
  * Upload image to secure backend
@@ -36,7 +37,7 @@ export const uploadImageSecure = async (file: File): Promise<string | null> => {
         const imageBase64 = await toBase64(file);
 
         // 2. Send to Backend
-        const response = await fetch(`${API_BASE}/upload-image`, {
+        const response = await fetch(`/api/upload-image`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -64,7 +65,7 @@ export const uploadImageSecure = async (file: File): Promise<string | null> => {
  */
 export const sendChatMessage = async (message: string): Promise<string> => {
     try {
-        const response = await fetch(`${API_BASE}/chat`, {
+        const response = await fetch(`/api/chat`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ message })
