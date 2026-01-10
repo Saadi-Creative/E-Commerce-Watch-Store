@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 // NEW IMPORTS
 import { useState, useEffect } from 'react';
-import { useState, useEffect } from 'react';
+
 
 const BrandStory: React.FC = () => {
     const [clientCount, setClientCount] = useState(0);
