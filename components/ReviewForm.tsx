@@ -208,10 +208,12 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
                                 )}
                                 <input
                                     type="file"
+                                    id="review-image"
+                                    name="review-image"
                                     accept="image/*"
                                     multiple
                                     onChange={handleFileChange}
-                                    className="hidden"
+                                    className="hidden" // Kept hidden as per original functionality, but added id/name
                                     disabled={uploading}
                                 />
                             </label>

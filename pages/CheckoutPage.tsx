@@ -125,24 +125,24 @@ const CheckoutPage: React.FC = () => {
           <form onSubmit={handleOrderPlacement} className="space-y-5">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div className="md:col-span-2">
-                <label className={labelStyle}>Full Name *</label>
-                <input type="text" name="fullName" value={customerInfo.fullName} onChange={handleInputChange} className={inputStyle} required placeholder="e.g. Ahmed Khan" />
+                <label className={labelStyle} htmlFor="fullName">Full Name *</label>
+                <input type="text" id="fullName" name="fullName" value={customerInfo.fullName} onChange={handleInputChange} className={inputStyle} required placeholder="e.g. Ahmed Khan" />
               </div>
               <div className="md:col-span-2">
-                <label className={labelStyle}>Email (Optional - for order updates)</label>
-                <input type="email" name="email" value={customerInfo.email} onChange={handleInputChange} className={inputStyle} placeholder="your@email.com" />
+                <label className={labelStyle} htmlFor="email">Email (Optional - for order updates)</label>
+                <input type="email" id="email" name="email" value={customerInfo.email} onChange={handleInputChange} className={inputStyle} placeholder="your@email.com" />
               </div>
               <div className="md:col-span-2">
-                <label className={labelStyle}>Full Address *</label>
-                <textarea name="address" value={customerInfo.address} onChange={handleInputChange} className={`${inputStyle} h-24 resize-none`} required placeholder="House #, Street, Area..." />
+                <label className={labelStyle} htmlFor="address">Full Address *</label>
+                <textarea id="address" name="address" value={customerInfo.address} onChange={handleInputChange} className={`${inputStyle} h-24 resize-none`} required placeholder="House #, Street, Area..." />
               </div>
               <div>
-                <label className={labelStyle}>City *</label>
-                <input type="text" name="city" value={customerInfo.city} onChange={handleInputChange} className={inputStyle} required placeholder="e.g. Lahore" />
+                <label className={labelStyle} htmlFor="city">City *</label>
+                <input type="text" id="city" name="city" value={customerInfo.city} onChange={handleInputChange} className={inputStyle} required placeholder="e.g. Lahore" />
               </div>
               <div>
-                <label className={labelStyle}>Phone Number (WhatsApp) *</label>
-                <input type="tel" name="phoneNumber" value={customerInfo.phoneNumber} onChange={handleInputChange} className={inputStyle} required placeholder="0300-1234567" />
+                <label className={labelStyle} htmlFor="phoneNumber">Phone Number (WhatsApp) *</label>
+                <input type="tel" id="phoneNumber" name="phoneNumber" value={customerInfo.phoneNumber} onChange={handleInputChange} className={inputStyle} required placeholder="0300-1234567" />
               </div>
             </div>
 
@@ -151,13 +151,13 @@ const CheckoutPage: React.FC = () => {
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <label className={`flex items-center p-4 rounded-lg cursor-pointer border transition-all ${paymentMethod === 'COD' ? 'bg-gray-700 border-yellow-500 ring-1 ring-yellow-500' : 'bg-gray-700/50 border-gray-600 hover:bg-gray-700'}`}>
-                <input type="radio" name="paymentMethod" value="COD" checked={paymentMethod === 'COD'} onChange={() => setPaymentMethod('COD')} className="w-5 h-5 text-yellow-500 focus:ring-yellow-500" />
+              <label className={`flex items-center p-4 rounded-lg cursor-pointer border transition-all ${paymentMethod === 'COD' ? 'bg-gray-700 border-yellow-500 ring-1 ring-yellow-500' : 'bg-gray-700/50 border-gray-600 hover:bg-gray-700'}`} htmlFor="paymentStart">
+                <input type="radio" id="paymentStart" name="paymentMethod" value="COD" checked={paymentMethod === 'COD'} onChange={() => setPaymentMethod('COD')} className="w-5 h-5 text-yellow-500 focus:ring-yellow-500" />
                 <span className="ml-3 text-white font-medium">Cash On Delivery</span>
               </label>
 
-              <label className={`flex items-center p-4 rounded-lg cursor-pointer border transition-all ${paymentMethod === 'EASYPAYSA' ? 'bg-gray-700 border-yellow-500 ring-1 ring-yellow-500' : 'bg-gray-700/50 border-gray-600 hover:bg-gray-700'}`}>
-                <input type="radio" name="paymentMethod" value="EASYPAYSA" checked={paymentMethod === 'EASYPAYSA'} onChange={() => setPaymentMethod('EASYPAYSA')} className="w-5 h-5 text-yellow-500 focus:ring-yellow-500" />
+              <label className={`flex items-center p-4 rounded-lg cursor-pointer border transition-all ${paymentMethod === 'EASYPAYSA' ? 'bg-gray-700 border-yellow-500 ring-1 ring-yellow-500' : 'bg-gray-700/50 border-gray-600 hover:bg-gray-700'}`} htmlFor="paymentEasypaisa">
+                <input type="radio" id="paymentEasypaisa" name="paymentMethod" value="EASYPAYSA" checked={paymentMethod === 'EASYPAYSA'} onChange={() => setPaymentMethod('EASYPAYSA')} className="w-5 h-5 text-yellow-500 focus:ring-yellow-500" />
                 <span className="ml-3 text-white font-medium">Bank / Easypaisa</span>
               </label>
             </div>

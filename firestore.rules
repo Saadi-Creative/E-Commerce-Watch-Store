@@ -1,0 +1,46 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // --- Helper Functions ---
+    function isAdmin() {
+      return request.auth != null;
+    }
+
+    // --- Products ---
+    // Public: View products
+    // Admin: Add/Edit/Delete
+    match /products/{product} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // --- Reviews ---
+    // Public: Read reviews
+    // Public: Create reviews (Anyone can post)
+    // Admin: Delete/Manage
+    match /reviews/{review} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if isAdmin();
+    }
+
+    // --- Orders ---
+    // Public: Create (Checkout)
+    // Admin: Read/Update (Manage orders)
+    // SECURITY NOTE: We DO NOT allow public read/list on orders to protect customer data.
+    // This means client-side "count()" queries on orders will fail for non-admins. 
+    // Use a static number or backend function for stats.
+    match /orders/{order} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // --- Contacts/Messages ---
+    match /contacts/{contact} {
+      allow create: if true;
+      allow read, write: if isAdmin();
+    }
+  }
+}

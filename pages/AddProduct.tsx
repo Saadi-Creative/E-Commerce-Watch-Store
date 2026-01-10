@@ -174,18 +174,18 @@ const AddProduct: React.FC = () => {
       <form onSubmit={handleSubmit} className="space-y-6">
 
         <div>
-          <label className={labelStyle}>Product Name</label>
-          <input type="text" value={productName} onChange={(e) => setProductName(e.target.value)} className={inputStyle} placeholder="e.g. Omega Seamaster" />
+          <label className={labelStyle} htmlFor="productName">Product Name</label>
+          <input type="text" id="productName" name="productName" value={productName} onChange={(e) => setProductName(e.target.value)} className={inputStyle} placeholder="e.g. Omega Seamaster" />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-gray-900/50 p-4 rounded-lg border border-gray-700">
           <div>
-            <label className={labelStyle}>Original Price (Rs)</label>
-            <input type="number" value={originalPrice} onChange={(e) => setOriginalPrice(e.target.value === '' ? '' : parseFloat(e.target.value))} className={inputStyle} min="1" placeholder="0" />
+            <label className={labelStyle} htmlFor="originalPrice">Original Price (Rs)</label>
+            <input type="number" id="originalPrice" name="originalPrice" value={originalPrice} onChange={(e) => setOriginalPrice(e.target.value === '' ? '' : parseFloat(e.target.value))} className={inputStyle} min="1" placeholder="0" />
           </div>
           <div>
-            <label className={labelStyle}>Discount (%)</label>
-            <input type="number" value={discountPercentage} onChange={(e) => setDiscountPercentage(e.target.value === '' ? 0 : parseFloat(e.target.value))} className={inputStyle} min="0" max="100" placeholder="0" />
+            <label className={labelStyle} htmlFor="discountPercentage">Discount (%)</label>
+            <input type="number" id="discountPercentage" name="discountPercentage" value={discountPercentage} onChange={(e) => setDiscountPercentage(e.target.value === '' ? 0 : parseFloat(e.target.value))} className={inputStyle} min="0" max="100" placeholder="0" />
           </div>
           <div>
             <label className={labelStyle}>Final Price</label>
@@ -197,16 +197,16 @@ const AddProduct: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
-            <label className={labelStyle}>Stock Qty</label>
-            <input type="number" value={stock} onChange={(e) => setStock(e.target.value === '' ? '' : parseFloat(e.target.value))} className={inputStyle} min="0" placeholder="10" />
+            <label className={labelStyle} htmlFor="stock">Stock Qty</label>
+            <input type="number" id="stock" name="stock" value={stock} onChange={(e) => setStock(e.target.value === '' ? '' : parseFloat(e.target.value))} className={inputStyle} min="0" placeholder="10" />
           </div>
           <div>
-            <label className={labelStyle}>Brand</label>
-            <input type="text" value={brand} onChange={(e) => setBrand(e.target.value)} className={inputStyle} placeholder="Rolex" />
+            <label className={labelStyle} htmlFor="brand">Brand</label>
+            <input type="text" id="brand" name="brand" value={brand} onChange={(e) => setBrand(e.target.value)} className={inputStyle} placeholder="Rolex" />
           </div>
           <div>
-            <label className={labelStyle}>Gender</label>
-            <select value={gender} onChange={(e) => setGender(e.target.value as 'Male' | 'Female')} className={inputStyle}>
+            <label className={labelStyle} htmlFor="gender">Gender</label>
+            <select id="gender" name="gender" value={gender} onChange={(e) => setGender(e.target.value as 'Male' | 'Female')} className={inputStyle}>
               <option value="Male">Male ♂️</option>
               <option value="Female">Female ♀️</option>
             </select>
@@ -219,9 +219,11 @@ const AddProduct: React.FC = () => {
         </div>
 
         <div>
-          <label className={labelStyle}>Description</label>
+          <label className={labelStyle} htmlFor="description">Description</label>
           <div className="relative group">
             <textarea
+              id="description"
+              name="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={6}
@@ -245,15 +247,15 @@ const AddProduct: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
             <div>
-              <label className="text-sm text-gray-400 block mb-1">1. Color Name</label>
-              <input type="text" value={currentColor} onChange={(e) => setCurrentColor(e.target.value)} className={inputStyle} placeholder="e.g. Silver Dial" />
+              <label className="text-sm text-gray-400 block mb-1" htmlFor="colorName">1. Color Name</label>
+              <input type="text" id="colorName" name="colorName" value={currentColor} onChange={(e) => setCurrentColor(e.target.value)} className={inputStyle} placeholder="e.g. Silver Dial" />
             </div>
             <div>
               <label className="text-sm text-gray-400 block mb-1">2. Upload Images</label>
               <label className="cursor-pointer flex items-center justify-center px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition w-full shadow-lg">
                 {uploading ? <RefreshCw className="animate-spin mr-2" size={20} /> : <UploadCloud className="mr-2" size={20} />}
                 {uploading ? uploadProgress : 'Select Files'}
-                <input type="file" multiple accept="image/*" onChange={handleFileChange} className="hidden" disabled={uploading} />
+                <input type="file" id="productImages" name="productImages" multiple accept="image/*" onChange={handleFileChange} className="hidden" disabled={uploading} />
               </label>
               <button type="button" onClick={addManualUrl} className="text-xs text-gray-500 mt-2 hover:text-gray-300 underline">Or use URL</button>
             </div>

@@ -66,8 +66,10 @@ const Footer: React.FC = () => {
             <form className="relative" onSubmit={(e) => e.preventDefault()}>
               <input
                 type="email"
+                name="email"
+                id="newsletter-email"
                 placeholder="Enter your email"
-                className="w-full bg-white/5 border border-white/10 text-white px-4 py-3 focus:outline-none focus:border-brand-gold text-sm transition-colors"
+                className="w-full bg-gray-800 text-white px-4 py-2 rounded-l-lg border border-gray-700 focus:outline-none focus:border-yellow-500 transition-colors"
               />
               <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 text-brand-gold hover:text-white transition-colors">
                 <Send size={18} />

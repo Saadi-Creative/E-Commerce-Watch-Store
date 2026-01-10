@@ -66,23 +66,28 @@ const AdminLogin: React.FC = () => {
 
         <form onSubmit={handleLogin}>
           <div className="mb-4">
-            <label className="block text-gray-400 text-sm mb-2 ml-1">Email</label>
             <input
               type="email"
+              name="email"
+              id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className={inputStyle}
               required
+              autoComplete="email"
             />
           </div>
           <div className="mb-8">
-            <label className="block text-gray-400 text-sm mb-2 ml-1">Password</label>
+            <label className="block text-gray-400 text-sm mb-2 ml-1" htmlFor="password">Password</label>
             <input
               type="password"
+              name="password"
+              id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className={inputStyle}
               required
+              autoComplete="current-password"
             />
           </div>
           <button
