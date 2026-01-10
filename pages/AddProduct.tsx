@@ -58,7 +58,7 @@ const AddProduct: React.FC = () => {
             const compressedFile = await compressImage(file);
 
             // 2. Upload Securely via Backend
-            const url = await uploadImageSecure(compressedFile);
+            const url = await uploadImageSecure(compressedFile, import.meta.env.VITE_ADMIN_SECRET);
 
             if (url) {
               uploadedUrls.push(url);

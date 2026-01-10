@@ -12,9 +12,10 @@
 /**
  * Upload image to secure backend
  * @param file - File object to upload
+ * @param token - Optional Admin Secret for authorized uploads
  * @returns Promise with URL string
  */
-export const uploadImageSecure = async (file: File): Promise<string | null> => {
+export const uploadImageSecure = async (file: File, token?: string): Promise<string | null> => {
     try {
         // 1. Convert File to Base64
         const toBase64 = (file: File) => new Promise<string>((resolve, reject) => {
@@ -22,12 +23,6 @@ export const uploadImageSecure = async (file: File): Promise<string | null> => {
             reader.readAsDataURL(file);
             reader.onload = () => {
                 let encoded = reader.result?.toString() || '';
-                // Remove data:image/...;base64, prefix for ImgBB raw upload if needed,
-                // but standard apps might want the prefix. 
-                // Our backend logic: formData.append('image', imageBase64) 
-                // ImgBB API accepts base64 with or without prefix usually, but let's strip it to be safe 
-                // or send as is and handle in backend. 
-                // Let's send raw base64 data section only.
                 const base64Content = encoded.split(',')[1];
                 resolve(base64Content);
             };
@@ -37,11 +32,17 @@ export const uploadImageSecure = async (file: File): Promise<string | null> => {
         const imageBase64 = await toBase64(file);
 
         // 2. Send to Backend
+        const headers: HeadersInit = {
+            'Content-Type': 'application/json',
+        };
+
+        if (token) {
+            headers['Authorization'] = token;
+        }
+
         const response = await fetch(`/api/upload-image`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers,
             body: JSON.stringify({ imageBase64 }),
         });
 

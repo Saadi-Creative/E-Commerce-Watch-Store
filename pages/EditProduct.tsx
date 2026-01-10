@@ -87,7 +87,7 @@ const EditProduct: React.FC = () => {
             // 1. Compress
             const compressedFile = await compressImage(file);
             // 2. Upload Securely
-            const url = await uploadImageSecure(compressedFile);
+            const url = await uploadImageSecure(compressedFile, import.meta.env.VITE_ADMIN_SECRET);
 
             if (url) {
               uploadedUrls.push(url);
