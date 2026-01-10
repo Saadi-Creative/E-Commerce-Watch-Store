@@ -6,7 +6,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig(({ mode }: ConfigEnv) => {
     // Load all environment variables
     const env = loadEnv(mode, process.cwd(), '');
-    const GEMINI_API_KEY_VALUE = env.VITE_GEMINI_API_KEY;
+    // const GEMINI_API_KEY_VALUE = env.VITE_GEMINI_API_KEY; // REMOVED
 
     return {
         base: './', // <--- fixes blank page on Vercel
@@ -28,7 +28,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
             },
         },
         define: {
-            'import.meta.env.VITE_GEMINI_API_KEY': JSON.stringify(GEMINI_API_KEY_VALUE),
+            // 'import.meta.env.VITE_GEMINI_API_KEY': JSON.stringify(GEMINI_API_KEY_VALUE), // REMOVED FOR SECURITY
         },
         resolve: {
             alias: {
