@@ -3,11 +3,8 @@
 /**
  * Frontend API Service
  * Dispatches requests to the Node.js backend to keep keys secure.
+ * Uses relative paths for Vercel Serverless Functions.
  */
-
-// Use VITE_API_BASE from env or default to localhost
-// Use relative path for Vercel serverless functions
-// const API_BASE = '';
 
 /**
  * Upload image to secure backend
