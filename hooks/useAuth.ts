@@ -15,8 +15,8 @@ export const useAuth = () => {
     return () => unsubscribe();
   }, []);
 
-  // SECURITY: Compare against the environment variable
-  const adminEmail = import.meta.env.VITE_ADMIN_EMAIL;
+  // SECURITY: Compare against the environment variable OR the hardcoded secure email
+  const adminEmail = import.meta.env.VITE_ADMIN_EMAIL || 'wristhubstore@gmail.com';
 
   // Check if current user matches the admin email
   const isAdmin = !!user && !!adminEmail && user.email?.toLowerCase().trim() === adminEmail.toLowerCase().trim();
