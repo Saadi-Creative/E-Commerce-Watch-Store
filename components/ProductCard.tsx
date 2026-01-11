@@ -1,7 +1,5 @@
-// src/components/ProductCard.tsx
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { Eye, Venus, Mars, Watch } from 'lucide-react';
+import { Venus, Mars, Watch } from 'lucide-react';
 
 interface Variant { color: string; images: string[]; }
 
@@ -53,71 +51,62 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const hasDiscount = discount > 0 && originalPrice > product.price;
 
   return (
-    <div className="group relative bg-brand-charcoal rounded-sm overflow-hidden transition-all duration-300 hover:shadow-glow-md border border-white/5 hover:border-brand-gold/20 flex flex-col h-full">
+    <div className="group relative bg-gray-800 rounded-sm overflow-hidden transition-all duration-300 hover:shadow-lg border border-gray-700 hover:border-brand-gold/20 flex flex-col h-full">
 
       {/* === Image Area === */}
-      <Link to={`/product/${product.id}`} className="block relative aspect-square bg-white overflow-hidden">
+      <Link to={`/product/${product.id}`} className="block relative aspect-[4/5] bg-gray-700 overflow-hidden">
         {/* Primary Image */}
         <img
-          className={`w-full h-full object-cover object-center transition-opacity duration-500 ease-in-out ${hoverImage !== coverImage ? 'group-hover:opacity-0' : ''}`}
-          style={{ objectFit: 'cover', objectPosition: 'center' }}
+          className={`w-full h-full object-cover object-center transition-opacity duration-300 ease-in-out ${hoverImage !== coverImage ? 'group-hover:opacity-0' : ''}`}
           src={coverImage}
           alt={product.name}
           loading="lazy"
+          decoding="async"
+          width="300"
+          height="375"
         />
 
         {/* Secondary Image (Hover Reveal) */}
         {hoverImage !== coverImage && (
           <img
-            className="absolute inset-0 w-full h-full object-cover object-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out"
-            style={{ objectFit: 'cover', objectPosition: 'center' }}
+            className="absolute inset-0 w-full h-full object-cover object-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"
             src={hoverImage}
             alt={`${product.name} alternate view`}
             loading="lazy"
+            decoding="async"
+            width="300"
+            height="375"
           />
         )}
 
         {/* Badges */}
-        <div className="absolute top-3 left-3 flex flex-col gap-2 z-10">
+        <div className="absolute top-2 left-2 flex flex-col gap-1 z-10">
           {hasDiscount && (
-            <span className="bg-brand-gold text-brand-darker text-[10px] font-bold px-2 py-0.5 uppercase tracking-wider">
+            <span className="bg-brand-gold text-brand-darker text-[10px] font-bold px-1.5 py-0.5 uppercase tracking-wider shadow-sm">
               {Math.round(discount)}% OFF
-            </span>
-          )}
-          {/* Example Logic for Best Seller - could be prop driven */}
-          {product.id.includes('1') && (
-            <span className="bg-white/10 backdrop-blur-md text-white text-[10px] font-bold px-2 py-0.5 uppercase tracking-wider border border-white/20">
-              Best Seller
             </span>
           )}
         </div>
 
         {/* Gender Icon Overlay */}
-        <div className="absolute top-3 right-3 p-1.5 bg-brand-darker/50 backdrop-blur-sm rounded-full text-white/70 hover:text-white transition-colors z-10">
+        <div className="absolute top-2 right-2 p-1.5 bg-gray-900/60 backdrop-blur-[2px] rounded-full text-white/80 hover:text-white transition-colors z-10">
           {getGenderIcon(product.gender)}
-        </div>
-
-        {/* Quick Action Overlay */}
-        <div className="absolute bottom-0 left-0 w-full translate-y-full group-hover:translate-y-0 transition-transform duration-300 bg-white/10 backdrop-blur-md p-3 flex justify-center z-10">
-          <span className="text-white text-xs font-bold uppercase tracking-widest flex items-center gap-2">
-            <Eye size={14} /> View Details
-          </span>
         </div>
       </Link>
 
       {/* === Content Area === */}
-      <div className="p-4 flex flex-col flex-grow">
-        <h3 className="text-sm font-medium text-white group-hover:text-brand-gold transition-colors line-clamp-1 mb-1 font-serif tracking-wide">
+      <div className="p-3 flex flex-col flex-grow">
+        <h3 className="text-xs sm:text-sm font-medium text-gray-100 group-hover:text-brand-gold transition-colors line-clamp-1 mb-1 font-sans tracking-wide">
           {product.name}
         </h3>
 
-        <div className="flex items-baseline gap-3 mt-auto">
-          <span className="text-base font-bold text-brand-gold-light">
+        <div className="flex items-baseline gap-2 mt-auto">
+          <span className="text-sm sm:text-base font-bold text-brand-gold-light">
             Rs. {product.price.toLocaleString()}
           </span>
 
           {hasDiscount && (
-            <span className="text-xs text-gray-500 line-through decoration-brand-gold/50">
+            <span className="text-[10px] sm:text-xs text-gray-500 line-through decoration-brand-gold/50">
               Rs. {originalPrice.toLocaleString()}
             </span>
           )}

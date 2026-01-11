@@ -1,7 +1,8 @@
 // src/App.tsx
 import React, { Suspense } from 'react';
 import { Analytics } from '@vercel/analytics/react';
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import ScrollToTop from './components/ScrollToTop';
 import { CartProvider } from './context/CartContext';
 import { ToastProvider } from './components/Toast';
 
@@ -49,8 +50,9 @@ const App: React.FC = () => {
   return (
     <ToastProvider>
       <CartProvider>
-        <HashRouter>
+        <BrowserRouter>
           <Analytics />
+          <ScrollToTop /> {/* New helper for scroll restoration */}
           <Suspense fallback={<PageLoader />}>
             <Routes>
 
@@ -87,7 +89,7 @@ const App: React.FC = () => {
 
             </Routes>
           </Suspense>
-        </HashRouter>
+        </BrowserRouter>
       </CartProvider>
     </ToastProvider>
   );

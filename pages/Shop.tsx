@@ -1,9 +1,8 @@
-// src/pages/Shop.tsx
 import React, { useEffect, useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
 import { db } from '../firebase';
 import { collection, getDocs } from 'firebase/firestore';
-import { Eye, ChevronDown, Filter, Search, X } from 'lucide-react';
+import { ChevronDown, Filter, Search, X } from 'lucide-react';
+import ProductCard from '../components/ProductCard';
 
 interface Variant { color: string; images: string[]; }
 
@@ -31,15 +30,6 @@ const Shop: React.FC = () => {
   const [genderFilter, setGenderFilter] = useState('All');
   const [priceSort, setPriceSort] = useState('newest');
   const [searchTerm, setSearchTerm] = useState('');
-
-  // Logic: Product is "New" if added within last 7 days
-  const isProductNew = (createdAt: any) => {
-    if (!createdAt) return false;
-    const now = new Date().getTime();
-    const productDate = new Date(createdAt.seconds * 1000).getTime();
-    const diffInDays = (now - productDate) / (1000 * 3600 * 24);
-    return diffInDays <= 7;
-  };
 
   const uniqueBrands = useMemo(() => {
     const brands = new Set(allProducts.map(p => p.brand).filter((b): b is string => !!b));
@@ -214,31 +204,11 @@ const Shop: React.FC = () => {
         ) : (
           <>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-              {visibleProducts.map((product) => {
-                const hasDiscount = (product.discount || 0) > 0 && (product.originalPrice || 0) > product.price;
-                const isNew = isProductNew(product.createdAt);
-
-                return (
-                  <div key={product.id} className="group bg-gray-800/60 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden border border-gray-700/50 hover:-translate-y-2 hover:shadow-glow-md hover:border-yellow-500/30 transition-all duration-500 flex flex-col h-full relative">
-                    <Link to={`/product/${product.id}`} className="relative h-40 sm:h-64 w-full bg-white block overflow-hidden">
-                      <img src={product.imageUrls[0]} alt={product.name} className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105" style={{ objectFit: 'cover', objectPosition: 'center' }} loading="lazy" decoding="async" />
-                      {hasDiscount && <span className="absolute top-0 left-0 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-br-lg shadow-md z-10 uppercase tracking-wider">{Math.round(product.discount || 0)}% OFF</span>}
-                      {isNew && <span className="absolute top-0 right-0 bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg shadow-md z-10 uppercase tracking-wider animate-pulse">NEW</span>}
-                    </Link>
-                    <div className="p-3 sm:p-4 flex flex-col flex-grow">
-                      <div className="mb-2">
-                        <p className="text-[9px] sm:text-[10px] text-yellow-500 uppercase tracking-widest font-bold mb-1">{product.brand}</p>
-                        <h3 className="text-sm sm:text-base font-bold text-white leading-tight group-hover:text-yellow-400 transition-colors line-clamp-2 min-h-[2.5rem]">{product.name}</h3>
-                      </div>
-                      <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-2 mb-3">
-                        <span className="text-base sm:text-lg font-bold text-yellow-500">Rs. {product.price.toLocaleString()}</span>
-                        {hasDiscount && <span className="text-[10px] sm:text-xs text-gray-500 line-through decoration-red-500/50 font-medium">Rs. {product.originalPrice?.toLocaleString()}</span>}
-                      </div>
-                      <Link to={`/product/${product.id}`} className="w-full py-2 px-3 sm:px-4 rounded-lg font-bold text-[10px] sm:text-xs uppercase tracking-wider transition-all duration-300 bg-gray-700 text-white hover:bg-yellow-500 hover:text-gray-900 flex items-center justify-center mt-auto"><Eye size={14} className="mr-1 sm:mr-2" /> View</Link>
-                    </div>
-                  </div>
-                );
-              })}
+              {visibleProducts.map((product) => (
+                <div key={product.id} className="h-full">
+                  <ProductCard product={product} />
+                </div>
+              ))}
             </div>
 
             {/* LOAD MORE BUTTON */}

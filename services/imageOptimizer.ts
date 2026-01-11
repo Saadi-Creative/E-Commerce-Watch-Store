@@ -3,11 +3,12 @@
  * Best for reducing file size of high-res uploads (e.g. from iPhones).
  * 
  * @param file - The original File object
- * @param maxWidth - Maximum width (default 1920px for Full HD)
- * @param quality - JPEG quality 0-1 (default 0.85 for high quality)
+ * @param file - The original File object
+ * @param maxWidth - Maximum width (default 1080px for Web Performance)
+ * @param quality - JPEG quality 0-1 (default 0.75 for balance)
  * @returns Promise<File> - The compressed file
  */
-export const compressImage = (file: File, maxWidth = 1920, quality = 0.85): Promise<File> => {
+export const compressImage = (file: File, maxWidth = 1080, quality = 0.75): Promise<File> => {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);

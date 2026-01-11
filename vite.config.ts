@@ -9,7 +9,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
     // const GEMINI_API_KEY_VALUE = env.VITE_GEMINI_API_KEY; // REMOVED
 
     return {
-        base: './', // <--- fixes blank page on Vercel
+        base: '/', // <--- Changed to root for BrowserRouter
         server: {
             port: 5173,
             host: '0.0.0.0',

@@ -20,6 +20,47 @@ const SEO: React.FC<SEOProps> = ({
 }) => {
     const siteTitle = `${title} | WristHub Premium`;
 
+    const localBusinessSchema = {
+        "@context": "https://schema.org",
+        "@type": "Store",
+        "name": "WristHub Premium Watches",
+        "image": "https://wristhub.pk/wristhublogo.svg",
+        "@id": "https://wristhub.pk",
+        "url": "https://wristhub.pk",
+        "telephone": "+923000000000",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Main Market",
+            "addressLocality": "Lahore",
+            "postalCode": "54000",
+            "addressCountry": "PK"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 31.5204,
+            "longitude": 74.3587
+        },
+        "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday"
+            ],
+            "opens": "10:00",
+            "closes": "22:00"
+        },
+        "sameAs": [
+            "https://www.facebook.com/wristhubpk",
+            "https://www.instagram.com/wristhubpk"
+        ]
+    }; // Default store schema if no specific product schema is provided
+
+    const finalSchema = schema || localBusinessSchema;
+
     return (
         <Helmet>
             {/* Standard Metadata */}
@@ -34,6 +75,8 @@ const SEO: React.FC<SEOProps> = ({
             <meta property="og:image" content={image} />
             <meta property="og:url" content={canonicalUrl} />
 
+            <meta property="og:locale" content="en_PK" />
+
             {/* Twitter */}
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:title" content={siteTitle} />
@@ -41,11 +84,9 @@ const SEO: React.FC<SEOProps> = ({
             <meta name="twitter:image" content={image} />
 
             {/* JSON-LD Structured Data (Google Rich Snippets) */}
-            {schema && (
-                <script type="application/ld+json">
-                    {JSON.stringify(schema)}
-                </script>
-            )}
+            <script type="application/ld+json">
+                {JSON.stringify(finalSchema)}
+            </script>
         </Helmet>
     );
 };

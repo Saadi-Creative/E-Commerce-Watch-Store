@@ -172,23 +172,50 @@ const ProductDetailsPage: React.FC = () => {
     if (!product) return undefined;
     return {
       "@context": "https://schema.org/",
-      "@type": "Product",
-      "name": product.name,
-      "image": product.imageUrls,
-      "description": product.description,
-      "sku": product.id,
-      "brand": {
-        "@type": "Brand",
-        "name": "WristHub"
-      },
-      "offers": {
-        "@type": "Offer",
-        "url": window.location.href,
-        "priceCurrency": "PKR",
-        "price": product.price,
-        "availability": (product.stock && product.stock > 0) ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-        "itemCondition": "https://schema.org/NewCondition"
-      }
+      "@graph": [
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://wristhub.pk/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Shop",
+              "item": "https://wristhub.pk/shop"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": product.name,
+              "item": window.location.href
+            }
+          ]
+        },
+        {
+          "@type": "Product",
+          "name": product.name,
+          "image": product.imageUrls,
+          "description": product.description,
+          "sku": product.id,
+          "brand": {
+            "@type": "Brand",
+            "name": "WristHub"
+          },
+          "offers": {
+            "@type": "Offer",
+            "url": window.location.href,
+            "priceCurrency": "PKR",
+            "price": product.price,
+            "availability": (product.stock && product.stock > 0) ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+            "itemCondition": "https://schema.org/NewCondition"
+          }
+        }
+      ]
     };
   }, [product]);
 
