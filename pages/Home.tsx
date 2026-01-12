@@ -1,28 +1,43 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
+// Components
+import HeroSection from '../components/HeroSection';
+import CollectionGrid from '../components/CollectionGrid';
+import BrandStory from '../components/BrandStory';
+import TestimonialsMasonry from '../components/TestimonialsMasonry';
+import TrustBadges from '../components/TrustBadges';
+import WhatsAppLink from '../components/WhatsAppLink';
+
 const Home: React.FC = () => {
   return (
     <>
       <Helmet>
         <title>WristHub PK - Premium Watches in Pakistan</title>
-        <meta name="description" content="WristHub PK offers the finest collection of premium watches in Pakistan. Shop luxury timepieces with cash on delivery and fast shipping." />
+        <meta name="description" content="Discover WristHub PK: The ultimate destination for premium watches in Pakistan. Luxury timepieces, cash on delivery, and exclusive designs." />
       </Helmet>
-      <div style={{
-        fontFamily: 'Arial, sans-serif',
-        textAlign: 'center',
-        padding: '50px',
-        background: '#f7f7f7',
-        color: '#333',
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}>
-        <h1 style={{ fontSize: '50px', marginBottom: '20px' }}>🚧 We'll Be Back Soon!</h1>
-        <p style={{ fontSize: '20px' }}>We are updating our store for a better experience. Please check back shortly.</p>
-      </div>
+
+      <main className="bg-brand-darker min-h-screen text-white overflow-x-hidden">
+        {/* 1. Hero Section (Video + Impact) */}
+        <HeroSection />
+
+        {/* 2. Trust Indicators (Immediate credibility) */}
+        <TrustBadges />
+
+        {/* 3. Featured Collections (Bento Grid) */}
+        <div id="collections">
+          <CollectionGrid />
+        </div>
+
+        {/* 4. Brand Story (Emotional Connection) */}
+        <BrandStory />
+
+        {/* 5. Social Proof (Testimonials) */}
+        <TestimonialsMasonry />
+
+        {/* Floating WhatsApp CTA */}
+        <WhatsAppLink />
+      </main>
     </>
   );
 };
