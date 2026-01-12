@@ -58,7 +58,7 @@ const Chatbot: React.FC = () => {
             {/* Toggle Button */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="fixed bottom-6 right-6 z-[60] bg-yellow-500 text-gray-900 p-4 rounded-full shadow-2xl hover:bg-yellow-400 transition-transform transform hover:scale-110 border-2 border-gray-900"
+                className="fixed bottom-20 md:bottom-6 right-6 z-[60] bg-yellow-500 text-gray-900 p-4 rounded-full shadow-2xl hover:bg-yellow-400 transition-transform transform hover:scale-110 border-2 border-gray-900"
                 aria-label="Toggle Chat"
             >
                 {isOpen ? <X size={24} /> : <MessageSquare size={24} />}
@@ -66,7 +66,7 @@ const Chatbot: React.FC = () => {
 
             {/* Chat Window */}
             {isOpen && (
-                <div className="fixed bottom-24 right-6 z-[60] w-80 sm:w-96 h-[500px] max-h-[70vh] bg-gray-800 border border-gray-700 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fade-in-up">
+                <div className="fixed bottom-36 md:bottom-24 right-6 z-[60] w-80 sm:w-96 h-[500px] max-h-[60vh] bg-gray-800 border border-gray-700 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fade-in-up">
 
                     {/* Header */}
                     <div className="bg-gray-900 p-4 border-b border-gray-700 flex items-center space-x-3">

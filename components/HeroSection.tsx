@@ -83,17 +83,22 @@ const HeroSection: React.FC = () => {
                         WristHub Premium
                     </motion.h2>
 
+
                     <motion.div
                         style={{ overflow: "hidden", display: "flex", flexWrap: "wrap", justifyContent: "center" }}
                         variants={container}
                         initial="hidden"
                         animate="visible"
-                        className="text-5xl md:text-7xl lg:text-8xl font-serif font-medium text-white leading-tight mb-8 drop-shadow-lg"
+                        className="text-4xl md:text-7xl lg:text-8xl font-serif font-medium text-white leading-tight mb-8 drop-shadow-lg"
                     >
-                        {slogan.split("").map((letter, index) => (
-                            <motion.span variants={child} key={index} className="inline-block relative">
-                                {letter === " " ? "\u00A0" : letter}
-                            </motion.span>
+                        {slogan.split(" ").map((word, wordIndex) => (
+                            <span key={wordIndex} className="inline-block whitespace-nowrap mr-2 sm:mr-4">
+                                {word.split("").map((letter, letterIndex) => (
+                                    <motion.span variants={child} key={letterIndex} className="inline-block relative">
+                                        {letter}
+                                    </motion.span>
+                                ))}
+                            </span>
                         ))}
                     </motion.div>
 
