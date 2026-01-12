@@ -1,6 +1,7 @@
 // src/App.tsx
 import React, { Suspense } from 'react';
 import { Analytics } from '@vercel/analytics/react';
+import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
 import { CartProvider } from './context/CartContext';
@@ -48,50 +49,52 @@ const PageLoader = () => (
 
 const App: React.FC = () => {
   return (
-    <ToastProvider>
-      <CartProvider>
-        <BrowserRouter>
-          <Analytics />
-          <ScrollToTop /> {/* New helper for scroll restoration */}
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
+    <HelmetProvider>
+      <ToastProvider>
+        <CartProvider>
+          <BrowserRouter>
+            <Analytics />
+            <ScrollToTop /> {/* New helper for scroll restoration */}
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
 
-              {/* === 1. CLIENT WEBSITE === */}
-              <Route element={<MainLayout />}>
-                <Route element={<ClientRoute />}>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/shop" element={<Shop />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/faq" element={<FAQ />} />
-                  <Route path="/cart" element={<CartPage />} />
-                  <Route path="/checkout" element={<CheckoutPage />} />
-                  <Route path="/product/:id" element={<ProductDetailsPage />} />
-                  <Route path="/confirmation/:method" element={<OrderConfirmation />} />
-                  <Route path="/reviews" element={<ReviewsPage />} />
-                  <Route path="/my-orders" element={<MyOrders />} />
+                {/* === 1. CLIENT WEBSITE === */}
+                <Route element={<MainLayout />}>
+                  <Route element={<ClientRoute />}>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/shop" element={<Shop />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/faq" element={<FAQ />} />
+                    <Route path="/cart" element={<CartPage />} />
+                    <Route path="/checkout" element={<CheckoutPage />} />
+                    <Route path="/product/:id" element={<ProductDetailsPage />} />
+                    <Route path="/confirmation/:method" element={<OrderConfirmation />} />
+                    <Route path="/reviews" element={<ReviewsPage />} />
+                    <Route path="/my-orders" element={<MyOrders />} />
+                  </Route>
                 </Route>
-              </Route>
 
-              {/* === 2. HIDDEN ADMIN PANEL (Secret URL) === */}
-              <Route path={`/${ADMIN_PATH}`} element={<AdminLogin />} />
+                {/* === 2. HIDDEN ADMIN PANEL (Secret URL) === */}
+                <Route path={`/${ADMIN_PATH}`} element={<AdminLogin />} />
 
-              <Route element={<AdminLayout />}>
-                <Route element={<AdminRoute />}>
-                  <Route path={`/${ADMIN_PATH}/add`} element={<AddProduct />} />
-                  <Route path={`/${ADMIN_PATH}/inventory`} element={<ManageInventory />} />
-                  <Route path={`/${ADMIN_PATH}/edit/:id`} element={<EditProduct />} />
+                <Route element={<AdminLayout />}>
+                  <Route element={<AdminRoute />}>
+                    <Route path={`/${ADMIN_PATH}/add`} element={<AddProduct />} />
+                    <Route path={`/${ADMIN_PATH}/inventory`} element={<ManageInventory />} />
+                    <Route path={`/${ADMIN_PATH}/edit/:id`} element={<EditProduct />} />
+                  </Route>
                 </Route>
-              </Route>
 
-              {/* === 3. CATCH-ALL 404 === */}
-              <Route path="*" element={<NotFound />} />
+                {/* === 3. CATCH-ALL 404 === */}
+                <Route path="*" element={<NotFound />} />
 
-            </Routes>
-          </Suspense>
-        </BrowserRouter>
-      </CartProvider>
-    </ToastProvider>
+              </Routes>
+            </Suspense>
+          </BrowserRouter>
+        </CartProvider>
+      </ToastProvider>
+    </HelmetProvider>
   );
 };
 

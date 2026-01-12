@@ -57,6 +57,7 @@ const HeroSection: React.FC = () => {
                     src="https://images.unsplash.com/photo-1547996160-81dfa63595aa?q=80&w=2600&auto=format&fit=crop"
                     alt="Luxury Watch Background"
                     className="h-full w-full object-cover opacity-40 scale-105"
+                    loading="eager"
                 />
                 {/* Refined Gradient Overlay for better text contrast */}
                 <div className="absolute inset-0 bg-gradient-to-b from-brand-darker/60 via-brand-darker/20 to-brand-darker/90" />

@@ -6,7 +6,7 @@ export interface Product {
   price: number;
   imageUrl: string;
   description?: string;
-  quantity?: number; 
+  quantity?: number;
 }
 
 interface CartContextType {
@@ -58,13 +58,13 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       ).filter(item => (item.quantity || 0) > 0)
     );
   };
-  
+
   const clearCart = () => {
     setCartItems([]);
   };
 
   const cartCount = cartItems.reduce((count, item) => count + (item.quantity || 0), 0);
-  
+
   // FIX: Ensure price is treated as a Number to prevent NaN errors
   const cartTotal = cartItems.reduce((total, item) => total + Number(item.price) * (item.quantity || 0), 0);
 

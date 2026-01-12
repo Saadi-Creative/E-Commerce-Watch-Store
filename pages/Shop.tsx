@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { db } from '../firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import { ChevronDown, Filter, Search, X } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import ProductCard from '../components/ProductCard';
 
 interface Variant { color: string; images: string[]; }
@@ -87,6 +88,21 @@ const Shop: React.FC = () => {
     // Fetch ALL products once (Data is small, DOM is heavy)
     const fetchProducts = async () => {
       try {
+        // 1. Check Cache
+        const cachedData = sessionStorage.getItem('shopProducts');
+        const cachedTimestamp = sessionStorage.getItem('shopProductsTime');
+        const CACHE_DURATION = 1000 * 60 * 5; // 5 Minutes
+
+        if (cachedData && cachedTimestamp) {
+          const now = Date.now();
+          if (now - Number(cachedTimestamp) < CACHE_DURATION) {
+            setAllProducts(JSON.parse(cachedData));
+            setLoading(false);
+            return;
+          }
+        }
+
+        // 2. Fetch Fresh Data
         const querySnapshot = await getDocs(collection(db, 'products'));
         // ... (parsing logic remains same)
         const productsData: Product[] = [];
@@ -112,7 +128,12 @@ const Shop: React.FC = () => {
             createdAt: data.createdAt
           } as Product);
         });
+
+        // 3. Update Cache & State
         setAllProducts(productsData);
+        sessionStorage.setItem('shopProducts', JSON.stringify(productsData));
+        sessionStorage.setItem('shopProductsTime', Date.now().toString());
+
       } catch (err) {
         setError("Failed to load products. Please try refreshing.");
       } finally {
@@ -133,14 +154,18 @@ const Shop: React.FC = () => {
 
   return (
     <div className="bg-gray-900 min-h-screen pt-24 pb-12">
+      <Helmet>
+        <title>Shop Premium Watches | WristHub PK</title>
+        <meta name="description" content="Explore our exclusive collection of luxury watches using our advanced filtering system. Find the perfect timepiece for you." />
+      </Helmet>
       <div className="container mx-auto px-4">
 
         {/* --- BANNER - Enhanced with glass effect --- */}
         <div className="h-[120px] mb-8 bg-gradient-to-r from-yellow-600 via-yellow-500 to-yellow-600 rounded-2xl flex flex-col items-center justify-center p-4 shadow-glow-md relative overflow-hidden group">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer"></div>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-white uppercase tracking-widest drop-shadow-lg z-10 text-center">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-white uppercase tracking-widest drop-shadow-lg z-10 text-center">
             Premium Collection
-          </h2>
+          </h1>
           <p className="text-yellow-100 text-sm md:text-base font-medium z-10 mt-1">Find your perfect timepiece</p>
         </div>
 

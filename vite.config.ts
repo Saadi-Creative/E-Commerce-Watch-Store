@@ -21,7 +21,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
                 output: {
                     manualChunks: {
                         vendor: ['react', 'react-dom', 'react-router-dom'],
-                        ui: ['lucide-react', 'framer-motion', 'swiper'],
+                        ui: ['lucide-react', 'framer-motion'],
                         firebase: ['firebase/app', 'firebase/auth', 'firebase/firestore', 'firebase/storage'],
                     },
                 },

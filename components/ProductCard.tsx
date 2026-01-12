@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Venus, Mars, Watch } from 'lucide-react';
 
@@ -19,7 +20,7 @@ interface ProductCardProps {
   product: Product;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<ProductCardProps> = React.memo(({ product }) => {
   // 1. Robust Image Logic
   let coverImage = 'https://placehold.co/300?text=No+Image'; // Fallback
   if (product.variants && product.variants.length > 0 && product.variants[0].images.length > 0) {
@@ -114,6 +115,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </div>
     </div>
   );
-};
+});
 
 export default ProductCard;

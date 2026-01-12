@@ -36,6 +36,9 @@ const Header: React.FC = () => {
                             <img
                                 src="/wristhublogo.svg"
                                 alt="WristHub"
+                                width="150"
+                                height="40"
+                                loading="eager"
                                 className="h-10 w-auto object-contain"
                             />
                             <span className="text-white font-serif text-xl tracking-widest md:hidden lg:block uppercase">WristHub</span>
