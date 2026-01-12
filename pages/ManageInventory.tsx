@@ -80,8 +80,10 @@ const ManageInventory: React.FC = () => {
         return <span className="text-green-400 font-bold text-xs">{stock} in stock</span>;
     };
 
+    const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || 'wh-secret-panel';
+
     const handleEditClick = (id: string) => {
-        navigate(`/admin/edit/${id}`);
+        navigate(`/${ADMIN_PATH}/edit/${id}`);
     };
 
     const handleDelete = async (id: string) => {
@@ -179,8 +181,8 @@ const ManageInventory: React.FC = () => {
                                     key={tab}
                                     onClick={() => setActiveTab(tab as any)}
                                     className={`flex-1 py-1 text-xs font-bold rounded-md transition-colors ${activeTab === tab
-                                            ? 'bg-yellow-500 text-gray-900'
-                                            : 'text-gray-400 hover:text-white hover:bg-gray-700'
+                                        ? 'bg-yellow-500 text-gray-900'
+                                        : 'text-gray-400 hover:text-white hover:bg-gray-700'
                                         }`}
                                 >
                                     {tab}
@@ -206,9 +208,9 @@ const ManageInventory: React.FC = () => {
                                 <div className="flex justify-between text-sm mb-2">
                                     <span className="text-yellow-500 font-bold">#{order.id.substring(0, 6)}</span>
                                     <span className={`px-2 rounded text-xs font-bold ${order.status === 'Cancelled' ? 'bg-red-900 text-red-200' :
-                                            order.status === 'Delivered' ? 'bg-green-900 text-green-200' :
-                                                order.status === 'Processing' ? 'bg-blue-900 text-blue-200' :
-                                                    'bg-gray-700 text-gray-300'
+                                        order.status === 'Delivered' ? 'bg-green-900 text-green-200' :
+                                            order.status === 'Processing' ? 'bg-blue-900 text-blue-200' :
+                                                'bg-gray-700 text-gray-300'
                                         }`}>{order.status}</span>
                                 </div>
                                 <div className="flex justify-between items-start">

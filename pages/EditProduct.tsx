@@ -12,6 +12,7 @@ interface Variant { color: string; images: string[]; }
 const EditProduct: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || 'wh-secret-panel';
   const [loadingData, setLoadingData] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
@@ -56,7 +57,7 @@ const EditProduct: React.FC = () => {
           }
         } else {
           alert("Product not found!");
-          navigate('/admin/inventory');
+          navigate(`/${ADMIN_PATH}/inventory`);
         }
       } catch (error) {
         console.error("Error loading product:", error);
@@ -132,7 +133,7 @@ const EditProduct: React.FC = () => {
         updatedAt: serverTimestamp()
       });
       setMessage({ type: 'success', text: 'Product updated successfully!' });
-      setTimeout(() => navigate('/admin/inventory'), 1500);
+      setTimeout(() => navigate(`/${ADMIN_PATH}/inventory`), 1500);
     } catch (error: any) {
       setMessage({ type: 'error', text: "Error updating: " + error.message });
     } finally {
@@ -149,7 +150,7 @@ const EditProduct: React.FC = () => {
     <div className="bg-gray-800 p-6 md:p-8 rounded-xl shadow-2xl border border-gray-700 max-w-5xl mx-auto">
       <div className="flex items-center justify-between mb-6 border-b border-gray-700 pb-4">
         <div className="flex items-center">
-          <button onClick={() => navigate('/admin/inventory')} className="mr-4 p-2 bg-gray-700 rounded-full hover:bg-gray-600 text-white"><ArrowLeft size={20} /></button>
+          <button onClick={() => navigate(`/${ADMIN_PATH}/inventory`)} className="mr-4 p-2 bg-gray-700 rounded-full hover:bg-gray-600 text-white"><ArrowLeft size={20} /></button>
           <h2 className="text-2xl font-bold text-white">Edit Product</h2>
         </div>
       </div>
