@@ -89,7 +89,7 @@ const HeroSection: React.FC = () => {
                         variants={container}
                         initial="hidden"
                         animate="visible"
-                        className="text-4xl md:text-7xl lg:text-8xl font-serif font-medium text-white leading-tight mb-8 drop-shadow-lg"
+                        className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif font-medium text-white leading-tight mb-8 drop-shadow-lg"
                     >
                         {slogan.split(" ").map((word, wordIndex) => (
                             <span key={wordIndex} className="inline-block whitespace-nowrap mr-2 sm:mr-4">

@@ -85,7 +85,7 @@ const CollectionGrid: React.FC = () => {
                     <p className="text-gray-400 max-w-2xl mx-auto">Explore our masterfully crafted timepieces, designed for every occasion.</p>
                 </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[250px] md:auto-rows-[300px]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[250px] md:auto-rows-[300px]">
 
                     {/* Main Large Item - Spans 2x2 */}
                     {p0 && (
