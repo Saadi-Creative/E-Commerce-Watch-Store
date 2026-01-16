@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase';
-import { collection, getDocs, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { collection, getDocs, deleteDoc, doc, updateDoc, writeBatch } from 'firebase/firestore';
 import { Trash2, RefreshCw, Edit, XCircle, CheckCircle, MessageCircle, Search, PackageCheck } from 'lucide-react';
 
 interface Product {
@@ -106,6 +106,41 @@ const ManageInventory: React.FC = () => {
         }
     };
 
+    const handleDeleteAll = async () => {
+        if (products.length === 0) return;
+
+        if (window.confirm("⚠ CRITICAL WARNING ⚠\n\nAre you sure you want to PERMANENTLY DELETE ALL PRODUCTS?\n\nThis action cannot be undone.")) {
+            if (window.confirm("Please confirm one last time:\n\nDELETE EVERYTHING?")) {
+                try {
+                    setLoading(true);
+
+                    // Firestore batch limit is 500, so we'll chunk if necessary (though unlikely for this scale)
+                    // For simplicity, we'll process in chunks of 450 to be safe
+                    const chunkSize = 450;
+                    for (let i = 0; i < products.length; i += chunkSize) {
+                        const batch = writeBatch(db);
+                        const chunk = products.slice(i, i + chunkSize);
+
+                        chunk.forEach(product => {
+                            const docRef = doc(db, "products", product.id);
+                            batch.delete(docRef);
+                        });
+
+                        await batch.commit();
+                    }
+
+                    setMessage("All products have been deleted.");
+                    await fetchProducts();
+                } catch (error) {
+                    console.error("Error deleting all products:", error);
+                    setMessage("Failed to delete all products. See console for details.");
+                } finally {
+                    setLoading(false);
+                }
+            }
+        }
+    };
+
     const openWhatsAppNotify = (order: Order) => {
         let msg = `Assalam-o-Alaikum ${order.customer.fullName}! `;
         if (order.status === 'Processing') {
@@ -132,7 +167,16 @@ const ManageInventory: React.FC = () => {
                     <div className="p-4 border-b border-gray-700 space-y-3">
                         <div className="flex justify-between items-center">
                             <h2 className="text-xl font-bold text-white">Inventory</h2>
-                            <button onClick={fetchProducts}><RefreshCw size={20} className="text-gray-400 hover:text-white" /></button>
+                            <div className="flex gap-2">
+                                <button
+                                    onClick={handleDeleteAll}
+                                    className="p-1.5 bg-red-900/30 text-red-500 rounded hover:bg-red-600 hover:text-white transition-colors"
+                                    title="Delete All Products"
+                                >
+                                    <Trash2 size={18} />
+                                </button>
+                                <button onClick={fetchProducts}><RefreshCw size={20} className="text-gray-400 hover:text-white" /></button>
+                            </div>
                         </div>
                         <div className="relative">
                             <input
