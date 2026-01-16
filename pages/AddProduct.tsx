@@ -6,6 +6,7 @@ import { setDoc, doc, serverTimestamp } from 'firebase/firestore';
 import { UploadCloud, Plus, Trash2, RefreshCw, Palette } from 'lucide-react';
 import { compressImage } from '../services/imageOptimizer';
 import { uploadImageSecure } from '../services/api'; // NEW: Secure API
+import { uploadToImgBBDirect } from '../services/imgbb'; // Fallback API
 
 interface Variant {
   color: string;
@@ -58,15 +59,19 @@ const AddProduct: React.FC = () => {
             const compressedFile = await compressImage(file);
 
             // 2. Upload Securely via Backend
-            const url = await uploadImageSecure(compressedFile, import.meta.env.VITE_ADMIN_SECRET);
+            let url = await uploadImageSecure(compressedFile, import.meta.env.VITE_ADMIN_SECRET);
+
+            // 3. Fallback to Direct Upload (if Secure fails/returns null)
+            if (!url) {
+              console.warn("Secure upload failed, trying direct upload...");
+              url = await uploadToImgBBDirect(compressedFile);
+            }
 
             if (url) {
               uploadedUrls.push(url);
             } else {
-              // Fallback? No, just fail securely.
-              console.error("Secure upload failed for", file.name);
-              alert(`Failed to upload ${file.name} via secure server`);
-              // Try uncompressed direct? No, that exposes key.
+              console.error("All upload methods failed for", file.name);
+              alert(`Failed to upload ${file.name}. Check your Internet or API Keys.`);
             }
           } catch (error) {
             console.error("Error processing file", file.name, error);

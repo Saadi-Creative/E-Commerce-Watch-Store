@@ -6,6 +6,7 @@ import { doc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { UploadCloud, Plus, Trash2, RefreshCw, Palette, ArrowLeft } from 'lucide-react';
 import { compressImage } from '../services/imageOptimizer';
 import { uploadImageSecure } from '../services/api'; // NEW: Secure API
+import { uploadToImgBBDirect } from '../services/imgbb'; // Fallback API
 
 interface Variant { color: string; images: string[]; }
 
@@ -88,12 +89,17 @@ const EditProduct: React.FC = () => {
             // 1. Compress
             const compressedFile = await compressImage(file);
             // 2. Upload Securely
-            const url = await uploadImageSecure(compressedFile, import.meta.env.VITE_ADMIN_SECRET);
+            let url = await uploadImageSecure(compressedFile, import.meta.env.VITE_ADMIN_SECRET);
+
+            if (!url) {
+              console.warn("Secure upload failed, trying direct upload...");
+              url = await uploadToImgBBDirect(compressedFile);
+            }
 
             if (url) {
               uploadedUrls.push(url);
             } else {
-              alert(`Failed to upload ${file.name} via secure server`);
+              alert(`Failed to upload ${file.name}. Check API Keys.`);
             }
           } catch (err) {
             console.error("Error processing file", file.name, err);
