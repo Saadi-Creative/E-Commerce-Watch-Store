@@ -76,40 +76,68 @@ const EditProduct: React.FC = () => {
     return Math.round(priceVal * (1 - discountVal / 100));
   }, [originalPrice, discountPercentage]);
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setUploading(true);
-      const files = e.target.files;
-      const uploadedUrls: string[] = [];
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        if (file) {
-          try {
-            setUploadProgress(`Uploading ${file.name}...`);
-            // 1. Compress
-            const compressedFile = await compressImage(file);
-            // 2. Upload Securely
-            let url = await uploadImageSecure(compressedFile, import.meta.env.VITE_ADMIN_SECRET);
+  const processFiles = async (files: FileList): Promise<string[]> => {
+    setUploading(true);
+    const uploadedUrls: string[] = [];
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      if (file) {
+        try {
+          setUploadProgress(`Uploading ${file.name}...`);
+          // 1. Compress
+          const compressedFile = await compressImage(file);
+          // 2. Upload Securely
+          let url = await uploadImageSecure(compressedFile, import.meta.env.VITE_ADMIN_SECRET);
 
-            if (!url) {
-              console.warn("Secure upload failed, trying direct upload...");
-              url = await uploadToImgBBDirect(compressedFile);
-            }
-
-            if (url) {
-              uploadedUrls.push(url);
-            } else {
-              alert(`Failed to upload ${file.name}. Check API Keys.`);
-            }
-          } catch (err) {
-            console.error("Error processing file", file.name, err);
-            alert(`Error: ${err instanceof Error ? err.message : String(err)}`);
+          if (!url) {
+            console.warn("Secure upload failed, trying direct upload...");
+            url = await uploadToImgBBDirect(compressedFile);
           }
+
+          if (url) {
+            uploadedUrls.push(url);
+          } else {
+            alert(`Failed to upload ${file.name}. Check API Keys.`);
+          }
+        } catch (err) {
+          console.error("Error processing file", file.name, err);
+          alert(`Error: ${err instanceof Error ? err.message : String(err)}`);
         }
       }
-      setCurrentImages([...currentImages, ...uploadedUrls]);
-      setUploading(false);
-      setUploadProgress('');
+    }
+    setUploading(false);
+    setUploadProgress('');
+    return uploadedUrls;
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const newUrls = await processFiles(e.target.files);
+      setCurrentImages([...currentImages, ...newUrls]);
+    }
+  };
+
+  // --- EDIT EXISTING VARIANTS HANDLERS ---
+  const handleVariantColorChange = (index: number, newColor: string) => {
+    const updated = [...variants];
+    updated[index].color = newColor;
+    setVariants(updated);
+  };
+
+  const handleRemoveVariantImage = (vIndex: number, imgIndex: number) => {
+    const updated = [...variants];
+    updated[vIndex].images = updated[vIndex].images.filter((_, i) => i !== imgIndex);
+    setVariants(updated);
+  };
+
+  const handleVariantAddImages = async (vIndex: number, e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const newUrls = await processFiles(e.target.files);
+      if (newUrls.length > 0) {
+        const updated = [...variants];
+        updated[vIndex].images = [...updated[vIndex].images, ...newUrls];
+        setVariants(updated);
+      }
     }
   };
 
@@ -192,21 +220,68 @@ const EditProduct: React.FC = () => {
         {/* VARIANTS */}
         <div className="bg-gray-900 p-6 rounded-xl border border-gray-600">
           <h3 className="text-yellow-500 font-bold mb-4 flex items-center text-lg"><Palette className="mr-2" /> Variants</h3>
-          {variants.map((v, idx) => (
-            <div key={idx} className="flex justify-between items-center bg-gray-700 p-3 rounded mb-2 border border-gray-600">
-              <span className="text-white font-bold">{v.color} ({v.images.length} imgs)</span>
-              <button type="button" onClick={() => setVariants(variants.filter((_, i) => i !== idx))} className="text-red-400 hover:text-red-300"><Trash2 size={18} /></button>
-            </div>
-          ))}
+
+          <div className="space-y-4 mb-6">
+            {variants.map((v, idx) => (
+              <div key={idx} className="bg-gray-800 p-4 rounded border border-gray-700">
+                <div className="flex justify-between items-center mb-3">
+                  <div className="flex-grow mr-4">
+                    <label className="text-xs text-gray-400 uppercase font-bold block mb-1">Color Name</label>
+                    <input
+                      type="text"
+                      value={v.color}
+                      onChange={(e) => handleVariantColorChange(idx, e.target.value)}
+                      className={inputStyle}
+                    />
+                  </div>
+                  <button type="button" onClick={() => setVariants(variants.filter((_, i) => i !== idx))} className="text-red-400 hover:text-red-300 p-2"><Trash2 size={20} /></button>
+                </div>
+
+                {/* Variant Images */}
+                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 mb-3">
+                  {v.images.map((img, imgIdx) => (
+                    <div key={imgIdx} className="relative group">
+                      <img src={img} alt="" className="w-full h-20 object-cover rounded border border-gray-600" />
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveVariantImage(idx, imgIdx)}
+                        className="absolute top-0 right-0 bg-red-600 text-white p-1 rounded-bl opacity-0 group-hover:opacity-100 transition-opacity"
+                        title="Remove Image"
+                      >
+                        <Trash2 size={12} />
+                      </button>
+                    </div>
+                  ))}
+                  {/* Add Image Button for this variant */}
+                  <label className="flex flex-col items-center justify-center h-20 bg-gray-700 hover:bg-gray-600 border border-gray-500 border-dashed rounded cursor-pointer transition text-gray-400 hover:text-white">
+                    {uploading ? <RefreshCw className="animate-spin" size={20} /> : <Plus size={20} />}
+                    <span className="text-[10px] mt-1">Add Img</span>
+                    <input type="file" multiple onChange={(e) => handleVariantAddImages(idx, e)} className="hidden" disabled={uploading} />
+                  </label>
+                </div>
+              </div>
+            ))}
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 pt-4 border-t border-gray-700">
             <input type="text" value={currentColor} onChange={(e) => setCurrentColor(e.target.value)} className={inputStyle} placeholder="New Color Name" />
             <label className="cursor-pointer flex items-center justify-center px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition">
               {uploading ? <RefreshCw className="animate-spin mr-2" size={20} /> : <UploadCloud className="mr-2" size={20} />}
-              {uploading ? uploadProgress : 'Upload Images'}
+              {uploading ? uploadProgress : 'Upload Images (New)'}
               <input type="file" multiple onChange={handleFileChange} className="hidden" disabled={uploading} />
             </label>
           </div>
-          <button type="button" onClick={handleAddVariant} className="w-full mt-4 bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded flex items-center justify-center"><Plus className="mr-2" /> Add Variant</button>
+
+          {/* Preview for New Variant Images */}
+          {currentImages.length > 0 && (
+            <div className="flex gap-2 overflow-x-auto py-2 mt-2">
+              {currentImages.map((img, i) => (
+                <img key={i} src={img} className="h-16 w-16 rounded border border-gray-600 object-cover" />
+              ))}
+            </div>
+          )}
+
+          <button type="button" onClick={handleAddVariant} className="w-full mt-4 bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded flex items-center justify-center"><Plus className="mr-2" /> Add New Variant</button>
         </div>
 
         <button type="submit" disabled={saving} className="w-full bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-extrabold py-4 rounded-xl text-lg shadow-xl mt-6 transition-transform hover:scale-[1.01]">
