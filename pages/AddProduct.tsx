@@ -178,6 +178,61 @@ const AddProduct: React.FC = () => {
 
       <form onSubmit={handleSubmit} className="space-y-6">
 
+        <div className="bg-gray-900 p-6 rounded-xl border border-gray-600">
+          <h3 className="text-yellow-500 font-bold mb-4 flex items-center text-lg"><Palette className="mr-2" /> Image & Color Manager</h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+            <div>
+              <label className="text-sm text-gray-400 block mb-1">1. Upload Images</label>
+              <label className="cursor-pointer flex items-center justify-center px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition w-full shadow-lg">
+                {uploading ? <RefreshCw className="animate-spin mr-2" size={20} /> : <UploadCloud className="mr-2" size={20} />}
+                {uploading ? uploadProgress : 'Select Files'}
+                <input type="file" id="productImages" name="productImages" multiple accept="image/*" onChange={handleFileChange} className="hidden" disabled={uploading} />
+              </label>
+              <button type="button" onClick={addManualUrl} className="text-xs text-gray-500 mt-2 hover:text-gray-300 underline">Or use URL</button>
+            </div>
+            <div>
+              <label className="text-sm text-gray-400 block mb-1" htmlFor="colorName">2. Color Name</label>
+              <input type="text" id="colorName" name="colorName" value={currentColor} onChange={(e) => setCurrentColor(e.target.value)} className={inputStyle} placeholder="e.g. Silver Dial" />
+            </div>
+          </div>
+
+          {currentImages.length > 0 && (
+            <div className="flex flex-wrap gap-3 mb-4 p-3 bg-gray-800 rounded border border-gray-700">
+              {currentImages.map((url, index) => (
+                <div key={index} className="relative w-20 h-20 group">
+                  <img src={url} alt="Preview" className="w-full h-full object-cover rounded border border-gray-500" />
+                  <button type="button" onClick={() => removeCurrentImage(index)} className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 size={12} /></button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <button type="button" onClick={handleAddVariant} className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg flex items-center justify-center shadow-lg transition-transform transform active:scale-95">
+            <Plus className="mr-2" /> Add This Variant
+          </button>
+        </div>
+
+        {variants.length > 0 && (
+          <div className="space-y-2">
+            <label className={labelStyle}>Ready to Save:</label>
+            {variants.map((v, idx) => (
+              <div key={idx} className="flex justify-between items-center bg-gray-700 p-3 rounded border border-gray-600 shadow-sm">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded bg-gray-800 overflow-hidden">
+                    <img src={v.images[0]} alt="" className="w-full h-full object-cover" />
+                  </div>
+                  <div>
+                    <span className="font-bold text-white block">{v.color}</span>
+                    <span className="text-xs text-gray-400">{v.images.length} images</span>
+                  </div>
+                </div>
+                <button type="button" onClick={() => removeVariant(idx)} className="text-red-400 hover:text-red-200 p-2 hover:bg-gray-600 rounded"><Trash2 size={18} /></button>
+              </div>
+            ))}
+          </div>
+        )}
+
         <div>
           <label className={labelStyle} htmlFor="productName">Product Name</label>
           <input type="text" id="productName" name="productName" value={productName} onChange={(e) => setProductName(e.target.value)} className={inputStyle} placeholder="e.g. Omega Seamaster" />
@@ -247,60 +302,7 @@ const AddProduct: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-gray-900 p-6 rounded-xl border border-gray-600">
-          <h3 className="text-yellow-500 font-bold mb-4 flex items-center text-lg"><Palette className="mr-2" /> Image & Color Manager</h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-            <div>
-              <label className="text-sm text-gray-400 block mb-1" htmlFor="colorName">1. Color Name</label>
-              <input type="text" id="colorName" name="colorName" value={currentColor} onChange={(e) => setCurrentColor(e.target.value)} className={inputStyle} placeholder="e.g. Silver Dial" />
-            </div>
-            <div>
-              <label className="text-sm text-gray-400 block mb-1">2. Upload Images</label>
-              <label className="cursor-pointer flex items-center justify-center px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition w-full shadow-lg">
-                {uploading ? <RefreshCw className="animate-spin mr-2" size={20} /> : <UploadCloud className="mr-2" size={20} />}
-                {uploading ? uploadProgress : 'Select Files'}
-                <input type="file" id="productImages" name="productImages" multiple accept="image/*" onChange={handleFileChange} className="hidden" disabled={uploading} />
-              </label>
-              <button type="button" onClick={addManualUrl} className="text-xs text-gray-500 mt-2 hover:text-gray-300 underline">Or use URL</button>
-            </div>
-          </div>
-
-          {currentImages.length > 0 && (
-            <div className="flex flex-wrap gap-3 mb-4 p-3 bg-gray-800 rounded border border-gray-700">
-              {currentImages.map((url, index) => (
-                <div key={index} className="relative w-20 h-20 group">
-                  <img src={url} alt="Preview" className="w-full h-full object-cover rounded border border-gray-500" />
-                  <button type="button" onClick={() => removeCurrentImage(index)} className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"><Trash2 size={12} /></button>
-                </div>
-              ))}
-            </div>
-          )}
-
-          <button type="button" onClick={handleAddVariant} className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg flex items-center justify-center shadow-lg transition-transform transform active:scale-95">
-            <Plus className="mr-2" /> Add This Variant
-          </button>
-        </div>
-
-        {variants.length > 0 && (
-          <div className="space-y-2">
-            <label className={labelStyle}>Ready to Save:</label>
-            {variants.map((v, idx) => (
-              <div key={idx} className="flex justify-between items-center bg-gray-700 p-3 rounded border border-gray-600 shadow-sm">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded bg-gray-800 overflow-hidden">
-                    <img src={v.images[0]} alt="" className="w-full h-full object-cover" />
-                  </div>
-                  <div>
-                    <span className="font-bold text-white block">{v.color}</span>
-                    <span className="text-xs text-gray-400">{v.images.length} images</span>
-                  </div>
-                </div>
-                <button type="button" onClick={() => removeVariant(idx)} className="text-red-400 hover:text-red-200 p-2 hover:bg-gray-600 rounded"><Trash2 size={18} /></button>
-              </div>
-            ))}
-          </div>
-        )}
 
         <button type="submit" disabled={loading || uploading} className="w-full bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-extrabold py-4 rounded-xl text-lg shadow-xl hover:shadow-yellow-500/20 transition-all transform hover:scale-[1.01]">
           {loading ? 'Uploading Product...' : 'PUBLISH PRODUCT'}
