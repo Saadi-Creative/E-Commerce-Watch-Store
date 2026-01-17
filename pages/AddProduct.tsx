@@ -36,7 +36,7 @@ const AddProduct: React.FC = () => {
     const priceVal = Number(originalPrice);
     const discountVal = Number(discountPercentage);
     if (isNaN(priceVal) || priceVal <= 0 || isNaN(discountVal) || discountVal < 0 || discountVal > 100) {
-      return null;
+      return 0;
     }
     return Math.round(priceVal * (1 - discountVal / 100));
   }, [originalPrice, discountPercentage]);
@@ -106,6 +106,9 @@ const AddProduct: React.FC = () => {
   };
 
   const generateSafeId = (name: string) => {
+    if (!name || name.trim() === '') {
+      return `untitled-${Date.now()}`;
+    }
     const cleanName = name.toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-+|-+$/g, '');
@@ -116,12 +119,10 @@ const AddProduct: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!productName || originalPrice === '' || stock === '' || !description || !brand || finalPrice === null) {
-      setMessage({ type: 'error', text: 'Please check all basic fields.' });
-      return;
-    }
+    // REMOVED STRICT VALIDATION for other fields
+    // ONLY check for Variants (Images)
     if (variants.length === 0) {
-      setMessage({ type: 'error', text: 'Please add at least one Color Variant.' });
+      setMessage({ type: 'error', text: 'Please add at least one Color Variant with images.' });
       return;
     }
 
@@ -131,13 +132,13 @@ const AddProduct: React.FC = () => {
     try {
       const customDocId = generateSafeId(productName);
       const productData = {
-        name: productName,
-        originalPrice: Number(originalPrice),
-        discount: Number(discountPercentage),
-        price: finalPrice,
-        stock: Number(stock),
-        description: description,
-        brand: brand,
+        name: productName || 'Untitled Product',
+        originalPrice: originalPrice === '' ? 0 : Number(originalPrice),
+        discount: discountPercentage === '' ? 0 : Number(discountPercentage),
+        price: finalPrice ?? 0,
+        stock: stock === '' ? 0 : Number(stock),
+        description: description || '',
+        brand: brand || '',
         gender: gender,
         isFeatured: isFeatured,
         variants: variants,
