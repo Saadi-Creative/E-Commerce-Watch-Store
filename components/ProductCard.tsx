@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Venus, Mars, Watch } from 'lucide-react';
+import OptimizedImage from './OptimizedImage';
 
 interface Variant { color: string; images: string[]; }
 
@@ -57,24 +58,20 @@ const ProductCard: React.FC<ProductCardProps> = React.memo(({ product }) => {
       {/* === Image Area === */}
       <Link to={`/product/${product.id}`} className="block relative aspect-[4/5] bg-gray-700 overflow-hidden">
         {/* Primary Image */}
-        <img
-          className={`w-full h-full object-cover object-center transition-opacity duration-300 ease-in-out ${hoverImage !== coverImage ? 'group-hover:opacity-0' : ''}`}
+        <OptimizedImage
+          className={`w-full h-full transition-opacity duration-300 ease-in-out ${hoverImage !== coverImage ? 'group-hover:opacity-0' : ''}`}
           src={coverImage}
           alt={product.name}
-          loading="lazy"
-          decoding="async"
           width="300"
           height="375"
         />
 
         {/* Secondary Image (Hover Reveal) */}
         {hoverImage !== coverImage && (
-          <img
-            className="absolute inset-0 w-full h-full object-cover object-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"
+          <OptimizedImage
+            className="absolute inset-0 w-full h-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"
             src={hoverImage}
             alt={`${product.name} alternate view`}
-            loading="lazy"
-            decoding="async"
             width="300"
             height="375"
           />

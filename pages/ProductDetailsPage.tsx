@@ -7,6 +7,7 @@ import { useCart } from '../context/CartContext';
 import { useAuth } from '../hooks/useAuth';
 import { ShoppingCart, CheckCircle, ChevronLeft, ChevronRight, Package, ShieldAlert } from 'lucide-react';
 import SEO from '../components/SEO';
+import OptimizedImage from '../components/OptimizedImage';
 
 interface Variant { color: string; images: string[]; }
 interface Product {
@@ -241,12 +242,12 @@ const ProductDetailsPage: React.FC = () => {
           <div className="relative w-full aspect-square bg-white rounded-xl overflow-hidden flex items-center justify-center border border-gray-600 shadow-inner group">
 
             {/* 🖼️ ID ADDED HERE FOR ANIMATION */}
-            <img
-              id="main-product-image"
-              src={currentImages[selectedImageIndex]}
+            <OptimizedImage
+              src={currentImages[selectedImageIndex] || ''}
               alt="Product"
-              loading="eager"
-              className="w-full h-full object-contain p-6 transition-transform duration-500 hover:scale-110"
+              className="w-full h-full"
+              imgClassName="object-contain p-6 transition-transform duration-500 hover:scale-110"
+              id="main-product-image"
             />
 
             {currentImages.length > 1 && (
@@ -266,7 +267,7 @@ const ProductDetailsPage: React.FC = () => {
                   onClick={() => setSelectedImageIndex(index)}
                   className={`w-20 h-20 flex-shrink-0 bg-white rounded-lg overflow-hidden p-1 border-2 transition-all ${selectedImageIndex === index ? 'border-yellow-500 scale-105' : 'border-gray-600 hover:border-gray-400 opacity-70 hover:opacity-100'}`}
                 >
-                  <img src={url} alt="thumb" className="w-full h-full object-contain" />
+                  <OptimizedImage src={url} alt="thumb" className="w-full h-full" imgClassName="object-contain" />
                 </button>
               ))}
             </div>
