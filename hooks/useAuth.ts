@@ -16,7 +16,7 @@ export const useAuth = () => {
   }, []);
 
   // SECURITY: Compare against the environment variable OR the hardcoded secure email
-  const adminEmail = import.meta.env.VITE_ADMIN_EMAIL || 'wristhubstore@gmail.com';
+  const adminEmail = import.meta.env.VITE_ADMIN_EMAIL || 'your-admin@example.com';
 
   // Check if current user matches the admin email
   const isAdmin = !!user && !!adminEmail && user.email?.toLowerCase().trim() === adminEmail.toLowerCase().trim();

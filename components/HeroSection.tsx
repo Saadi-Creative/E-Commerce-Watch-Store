@@ -80,7 +80,7 @@ const HeroSection: React.FC = () => {
                         transition={{ duration: 1.2, ease: "easeOut" }}
                         className="mb-6 text-sm md:text-lg font-bold uppercase tracking-[0.3em] md:tracking-[0.5em] text-brand-gold-light"
                     >
-                        WristHub Premium
+                        YourStoreName Premium
                     </motion.h2>
 
 

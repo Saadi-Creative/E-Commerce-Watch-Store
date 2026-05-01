@@ -40,7 +40,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }); // Using newer model name if available, or stick to what worked
 
         const contextPrompt = `
-        You are ChronoBot, the AI assistant for WristHub (formerly Chronopk), a premium watch store in Pakistan.
+        You are an AI assistant for YourStoreName, a premium watch store.
         
         CRITICAL RULES:
         1. **Price Range Queries**:
@@ -55,9 +55,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         5. **Pricing Fact**: We have watches starting from PKR 3,000.
 
         Store Info:
-        - Name: WristHub
+        - Name: YourStoreName
         - Policies: Cash on Delivery, 7-day returns.
-        - Contact: wristhubstore@gmail.com, +923155308406.
+        - Contact: your-email@example.com, +1234567890.
         
         User Message: ${message}
         `;

@@ -12,22 +12,22 @@ interface SEOProps {
 
 const SEO: React.FC<SEOProps> = ({
     title,
-    description = "Discover WristHub's premium collection of luxury watches in Pakistan. Elegant designs, superior craftsmanship, and nationwide delivery.",
-    canonicalUrl = "https://wristhub.pk",
-    image = "https://wristhub.pk/wristhublogo.svg",
+    description = "Discover YourStoreName's premium collection of luxury watches. Elegant designs, superior craftsmanship, and nationwide delivery.",
+    canonicalUrl = "https://your-domain.com",
+    image = "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=1200&auto=format&fit=crop",
     type = 'website',
     schema
 }) => {
-    const siteTitle = `${title} | WristHub Premium`;
+    const siteTitle = `${title} | YourStoreName Premium`;
 
     const localBusinessSchema = {
         "@context": "https://schema.org",
         "@type": "Store",
-        "name": "WristHub Premium Watches",
-        "image": "https://wristhub.pk/wristhublogo.svg",
-        "@id": "https://wristhub.pk",
-        "url": "https://wristhub.pk",
-        "telephone": "+923000000000",
+        "name": "YourStoreName Premium Watches",
+        "image": "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?q=80&w=1200&auto=format&fit=crop",
+        "@id": "https://your-domain.com",
+        "url": "https://your-domain.com",
+        "telephone": "+1234567890",
         "address": {
             "@type": "PostalAddress",
             "streetAddress": "Main Market",
@@ -54,8 +54,8 @@ const SEO: React.FC<SEOProps> = ({
             "closes": "22:00"
         },
         "sameAs": [
-            "https://www.facebook.com/wristhubpk",
-            "https://www.instagram.com/wristhubpk"
+            "https://www.facebook.com/your-page",
+            "https://www.instagram.com/your-page"
         ]
     }; // Default store schema if no specific product schema is provided
 

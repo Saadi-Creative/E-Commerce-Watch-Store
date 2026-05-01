@@ -5,7 +5,7 @@ service cloud.firestore {
 
     // --- Helper Functions ---
     function isAdmin() {
-      return request.auth != null && request.auth.token.email.lower() == 'wristhubstore@gmail.com';
+      return request.auth != null && request.auth.token.email.lower() == 'your-admin@example.com';
     }
 
     // --- Products ---

@@ -41,7 +41,7 @@ const BrandStory: React.FC = () => {
                         </h2>
                         <div className="space-y-6 text-gray-300 font-light text-lg">
                             <p>
-                                At WristHub, we believe a watch is more than a tool—it is a statement of legacy.
+                                At YourStoreName, we believe a watch is more than a tool—it is a statement of legacy.
                                 Born from a passion for precision and an eye for timeless aesthetics, our collection selects
                                 only the finest automatic and mechanical movements.
                             </p>

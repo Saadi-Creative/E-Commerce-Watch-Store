@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Send } from 'lucide-react';
 
 const Footer: React.FC = () => {
-  const email = 'wristhubstore@gmail.com';
-  const phonePrimary = '+923155308406';
+  const email = 'your-email@example.com';
+  const phonePrimary = '+1234567890';
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -23,14 +23,14 @@ const Footer: React.FC = () => {
           {/* 1. Brand & Info */}
           <div className="space-y-6">
             <Link to="/" className="block">
-              <span className="text-2xl font-serif text-white tracking-widest uppercase">WristHub</span>
+              <span className="text-2xl font-serif text-white tracking-widest uppercase">YourStoreName</span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
               Own your time. We curate the finest timepieces for those who value precision and legacy.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-brand-gold transition-colors"><Facebook size={20} /></a>
-              <a href="https://www.instagram.com/wristhubwatch?igsh=MTg0aTUyZjhtaXVxaA==" target="_blank" className="text-gray-400 hover:text-brand-gold transition-colors"><Instagram size={20} /></a>
+              <a href="https://www.instagram.com/your-page" target="_blank" className="text-gray-400 hover:text-brand-gold transition-colors"><Instagram size={20} /></a>
             </div>
           </div>
 
@@ -80,7 +80,7 @@ const Footer: React.FC = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-500 text-xs">© 2024 WristHub. All rights reserved.</p>
+          <p className="text-gray-500 text-xs">© 2024 YourStoreName. All rights reserved.</p>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-green-500"></div>
             <span className="text-gray-500 text-xs">System Operational</span>

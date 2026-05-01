@@ -41,7 +41,7 @@ const Header: React.FC = () => {
                                 loading="eager"
                                 className="h-10 w-auto object-contain"
                             />
-                            <span className="text-white font-serif text-xl tracking-widest md:hidden lg:block uppercase">WristHub</span>
+                            <span className="text-white font-serif text-xl tracking-widest md:hidden lg:block uppercase">YourStoreName</span>
                         </Link>
                     </div>
 

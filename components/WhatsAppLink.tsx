@@ -3,8 +3,8 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 
 const WhatsAppLink: React.FC = () => {
-    const whatsappNumber = '923155308406';
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=Assalam-o-Alaikum!%20I%20am%20interested%20in%20a%20watch%20from%20WristHub.`;
+    const whatsappNumber = '1234567890';
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=Assalam-o-Alaikum!%20I%20am%20interested%20in%20a%20watch%20from%20YourStoreName.`;
 
     const location = useLocation();
     if (location.pathname.startsWith('/admin')) return null;

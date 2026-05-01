@@ -12,7 +12,7 @@ interface ChatMessage {
 const Chatbot: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState<ChatMessage[]>([
-        { sender: 'model', text: 'Assalam-o-Alaikum! WristHub mein khushamdeed. Main aapki kya madad kar sakta hoon? ⌚' }
+        { sender: 'model', text: 'Assalam-o-Alaikum! YourStoreName mein khushamdeed. Main aapki kya madad kar sakta hoon? ⌚' }
     ]);
     const [userInput, setUserInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
