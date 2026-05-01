@@ -17,8 +17,7 @@ npm run build
 
 ## Documentation
 
-- **[DEPLOY.md](./DEPLOY.md)** - Complete deployment guide
-- **[EMAILJS_SETUP.md](./EMAILJS_SETUP.md)** - Email service configuration
+- **[README.md](./README.md)** - Main documentation
 
 ## Features
 
