@@ -7,7 +7,7 @@ import { useAuth } from '../hooks/useAuth';
 import { Lock } from 'lucide-react';
 
 // SECRET ADMIN PATH - Must match App.tsx
-const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || 'wh-secret-panel';
+const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || '';
 
 const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState('');

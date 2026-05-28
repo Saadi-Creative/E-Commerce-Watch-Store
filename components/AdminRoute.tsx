@@ -4,7 +4,7 @@ import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
 // SECRET ADMIN PATH - Must match App.tsx
-const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || 'wh-secret-panel';
+const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || '';
 
 const AdminRoute: React.FC = () => {
   const { user, isAdmin, loading } = useAuth();

@@ -6,7 +6,7 @@ import { useAuth } from '../hooks/useAuth';
 import { User, Menu, X } from 'lucide-react';
 
 // SECRET ADMIN PATH - Must match App.tsx
-const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || 'wh-secret-panel';
+const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || '';
 
 const Header: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);

@@ -22,7 +22,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // AUTHENTICATION CHECK
     const token = req.headers.authorization || req.headers.Authorization;
-    console.log("upload-image accessed by token:", token);
 
     if (!token || token !== process.env.ADMIN_SECRET) {
         return res.status(401).json({ error: "Unauthorized" });

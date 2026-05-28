@@ -38,7 +38,7 @@ const ManageInventory = React.lazy(() => import('./pages/ManageInventory'));
 import NotFound from './pages/NotFound';
 
 // SECRET ADMIN PATH - Read from environment variable
-const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || 'wh-secret-panel';
+const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || '';
 
 // Loading Component
 const PageLoader = () => (

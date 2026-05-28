@@ -13,7 +13,7 @@ interface Variant { color: string; images: string[]; }
 const EditProduct: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || 'wh-secret-panel';
+  const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || '';
   const [loadingData, setLoadingData] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);

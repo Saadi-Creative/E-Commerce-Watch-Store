@@ -6,7 +6,7 @@ import { auth } from '../firebase';
 import { LayoutDashboard, PlusSquare, LogOut, ShieldCheck } from 'lucide-react';
 
 // SECRET ADMIN PATH - Must match App.tsx
-const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || 'wh-secret-panel';
+const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || '';
 
 const AdminLayout: React.FC = () => {
   const navigate = useNavigate();

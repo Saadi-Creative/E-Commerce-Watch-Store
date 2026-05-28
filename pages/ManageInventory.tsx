@@ -80,7 +80,7 @@ const ManageInventory: React.FC = () => {
         return <span className="text-green-400 font-bold text-xs">{stock} in stock</span>;
     };
 
-    const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || 'wh-secret-panel';
+    const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || '';
 
     const handleEditClick = (id: string) => {
         navigate(`/${ADMIN_PATH}/edit/${id}`);
