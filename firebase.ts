@@ -42,16 +42,16 @@ export const signInWithEmailAndPassword = async (authObj: any, email: string, _p
 export const db = {}; 
 
 const getStore = () => {
-  const data = localStorage.getItem('mockFirestore_v2');
+  const data = localStorage.getItem('mockFirestore_v3');
   if (data) return JSON.parse(data);
   return { products: {}, reviews: {}, orders: {} };
 };
 
 const saveStore = (store: any) => {
-  localStorage.setItem('mockFirestore_v2', JSON.stringify(store));
+  localStorage.setItem('mockFirestore_v3', JSON.stringify(store));
 };
 
-if (!localStorage.getItem('mockFirestore_v2')) {
+if (!localStorage.getItem('mockFirestore_v3')) {
   saveStore({
     products: {
       'p1': {
@@ -81,7 +81,7 @@ if (!localStorage.getItem('mockFirestore_v2')) {
         brand: 'Daniel Wellington',
         gender: 'Female',
         stock: 15,
-        imageUrls: ['https://images.unsplash.com/photo-1508656934052-cd38221d6ebc?auto=format&fit=crop&q=80&w=800'],
+        imageUrls: ['https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=800'],
         createdAt: { seconds: Date.now() / 1000 - 10000 }
       },
       'p4': {
@@ -91,8 +91,108 @@ if (!localStorage.getItem('mockFirestore_v2')) {
         brand: 'Apple',
         gender: 'Unisex',
         stock: 8,
-        imageUrls: ['https://images.unsplash.com/photo-1579586337278-3befd40fd17a?auto=format&fit=crop&q=80&w=800'],
+        imageUrls: ['https://images.unsplash.com/photo-1434493789847-2f02b0c48289?auto=format&fit=crop&q=80&w=800'],
         createdAt: { seconds: Date.now() / 1000 - 20000 }
+      },
+      'p5': {
+        name: 'Tag Heuer Carrera',
+        price: 950000,
+        description: 'Classic sports watch with a sleek steel finish and high-precision chronograph.',
+        brand: 'Tag Heuer',
+        gender: 'Male',
+        stock: 4,
+        imageUrls: ['https://images.unsplash.com/photo-1587836374828-cb4387df3c7c?auto=format&fit=crop&q=80&w=800'],
+        createdAt: { seconds: Date.now() / 1000 - 25000 }
+      },
+      'p6': {
+        name: 'Casio Vintage Digital',
+        price: 15000,
+        description: 'Retro gold-tone digital watch with alarm, stopwatch, and auto-calendar.',
+        brand: 'Casio',
+        gender: 'Unisex',
+        stock: 25,
+        imageUrls: ['https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?auto=format&fit=crop&q=80&w=800'],
+        createdAt: { seconds: Date.now() / 1000 - 30000 }
+      },
+      'p7': {
+        name: 'Seiko Presage Cocktail Time',
+        price: 135000,
+        description: 'A masterpiece of Japanese craftsmanship featuring a mesmerizing blue sunray dial.',
+        brand: 'Seiko',
+        gender: 'Male',
+        stock: 6,
+        imageUrls: ['https://images.unsplash.com/photo-1533139502658-0198f920d8e8?auto=format&fit=crop&q=80&w=800'],
+        createdAt: { seconds: Date.now() / 1000 - 35000 }
+      },
+      'p8': {
+        name: 'Garmin Fenix 7 Sapphire',
+        price: 250000,
+        description: 'Premium multisport GPS watch with solar charging and advanced performance metrics.',
+        brand: 'Garmin',
+        gender: 'Unisex',
+        stock: 9,
+        imageUrls: ['https://images.unsplash.com/photo-1509741102003-ca59ec6a15ea?auto=format&fit=crop&q=80&w=800'],
+        createdAt: { seconds: Date.now() / 1000 - 40000 }
+      },
+      'p9': {
+        name: 'Tissot PRX Powermatic 80',
+        price: 180000,
+        description: 'A throwback to 1970s design with an integrated bracelet and 80-hour power reserve.',
+        brand: 'Tissot',
+        gender: 'Male',
+        stock: 12,
+        imageUrls: ['https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&q=80&w=800'],
+        createdAt: { seconds: Date.now() / 1000 - 45000 }
+      },
+      'p10': {
+        name: 'Fossil Gen 6 Smartwatch',
+        price: 65000,
+        description: 'A stylish smartwatch combining classic design with modern Wear OS features.',
+        brand: 'Fossil',
+        gender: 'Female',
+        stock: 10,
+        imageUrls: ['https://images.unsplash.com/photo-1508656934052-cd38221d6ebc?auto=format&fit=crop&q=80&w=800'],
+        createdAt: { seconds: Date.now() / 1000 - 50000 }
+      },
+      'p11': {
+        name: 'Citizen Eco-Drive Promaster',
+        price: 110000,
+        description: 'Professional diver’s watch powered by light, never needing a battery change.',
+        brand: 'Citizen',
+        gender: 'Male',
+        stock: 7,
+        imageUrls: ['https://images.unsplash.com/photo-1594534475808-b18fc33b045e?auto=format&fit=crop&q=80&w=800'],
+        createdAt: { seconds: Date.now() / 1000 - 55000 }
+      },
+      'p12': {
+        name: 'Cartier Tank Must',
+        price: 900000,
+        description: 'The epitome of elegance. Rectangular steel case with Roman numerals.',
+        brand: 'Cartier',
+        gender: 'Female',
+        stock: 2,
+        imageUrls: ['https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?auto=format&fit=crop&q=80&w=800'],
+        createdAt: { seconds: Date.now() / 1000 - 60000 }
+      },
+      'p13': {
+        name: 'Breitling Navitimer',
+        price: 2100000,
+        description: 'The iconic pilot’s chronograph featuring a circular slide rule bezel.',
+        brand: 'Breitling',
+        gender: 'Male',
+        stock: 3,
+        imageUrls: ['https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&q=80&w=800'],
+        createdAt: { seconds: Date.now() / 1000 - 65000 }
+      },
+      'p14': {
+        name: 'G-Shock Mudmaster',
+        price: 85000,
+        description: 'Built to withstand the toughest environments. Mud, shock, and water resistant.',
+        brand: 'Casio',
+        gender: 'Male',
+        stock: 11,
+        imageUrls: ['https://images.unsplash.com/photo-1490367532201-b9bc1dc483f6?auto=format&fit=crop&q=80&w=800'],
+        createdAt: { seconds: Date.now() / 1000 - 70000 }
       }
     },
     reviews: {},
