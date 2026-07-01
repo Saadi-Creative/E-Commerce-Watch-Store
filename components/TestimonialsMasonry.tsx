@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Star, Quote } from 'lucide-react';
 import { db } from '../firebase';
-import { collection, getDocs, limit, query, orderBy } from 'firebase/firestore';
+import { collection, getDocs, limit, query, orderBy } from '../firebase';
 
 interface Review {
     id: string;

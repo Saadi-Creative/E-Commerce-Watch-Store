@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Search, Package, Clock, CheckCircle, Truck, XCircle, Star, ArrowLeft } from 'lucide-react';
 import { db } from '../firebase';
-import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
+import { collection, query, where, getDocs, orderBy } from '../firebase';
 import ReviewForm from '../components/ReviewForm';
 
 interface OrderItem {

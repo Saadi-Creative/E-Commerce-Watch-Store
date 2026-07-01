@@ -1,7 +1,7 @@
 // src/pages/AdminLogin.tsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from '../firebase';
 import { auth } from '../firebase';
 import { useAuth } from '../hooks/useAuth';
 import { Lock } from 'lucide-react';

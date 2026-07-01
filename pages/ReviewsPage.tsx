@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Star, Camera, ShoppingBag, MessageSquare, ArrowLeft } from 'lucide-react';
 import { db } from '../firebase';
-import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
+import { collection, getDocs, query, where, orderBy } from '../firebase';
 
 interface Review {
     id: string;

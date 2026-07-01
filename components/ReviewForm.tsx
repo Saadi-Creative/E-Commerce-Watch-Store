@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Star, X, Camera, Send, Loader2 } from 'lucide-react';
 import { db } from '../firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp } from '../firebase';
 import { useToast } from './Toast';
 import { compressImage } from '../services/imageOptimizer';
 import { sanitizeMultiline, validateImageFile } from '../utils/security';

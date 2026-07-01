@@ -1,7 +1,7 @@
 // src/pages/ProductDetailsPage.tsx
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc } from '../firebase';
 import { db } from '../firebase';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../hooks/useAuth';

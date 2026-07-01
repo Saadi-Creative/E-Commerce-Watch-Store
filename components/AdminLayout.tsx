@@ -1,7 +1,7 @@
 // src/components/AdminLayout.tsx
 import React from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
-import { signOut } from 'firebase/auth';
+import { signOut } from '../firebase';
 import { auth } from '../firebase';
 import { LayoutDashboard, PlusSquare, LogOut, ShieldCheck } from 'lucide-react';
 

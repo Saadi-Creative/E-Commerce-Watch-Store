@@ -1,7 +1,7 @@
 // src/pages/AddProduct.tsx
 import React, { useState, useMemo } from 'react';
 import { db } from '../firebase';
-import { setDoc, doc, serverTimestamp } from 'firebase/firestore';
+import { setDoc, doc, serverTimestamp } from '../firebase';
 // FIX: Removed CheckCircle from import
 import { UploadCloud, Plus, Trash2, RefreshCw, Palette } from 'lucide-react';
 import { compressImage } from '../services/imageOptimizer';

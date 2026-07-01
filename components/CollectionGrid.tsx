@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase';
-import { collection, getDocs, limit, query, orderBy } from 'firebase/firestore';
+import { collection, getDocs, limit, query, orderBy } from '../firebase';
 
 interface Product {
     id: string;

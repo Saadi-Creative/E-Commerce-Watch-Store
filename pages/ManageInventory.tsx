@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase';
-import { collection, getDocs, deleteDoc, doc, updateDoc, writeBatch } from 'firebase/firestore';
+import { collection, getDocs, deleteDoc, doc, updateDoc, writeBatch } from '../firebase';
 import { Trash2, RefreshCw, Edit, XCircle, CheckCircle, MessageCircle, Search, PackageCheck } from 'lucide-react';
 
 interface Product {

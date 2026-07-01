@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { db } from '../firebase';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs } from '../firebase';
 import { ChevronDown, Filter, Search, X } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import ProductCard from '../components/ProductCard';

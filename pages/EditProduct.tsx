@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { db } from '../firebase';
-import { doc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, serverTimestamp } from '../firebase';
 import { UploadCloud, Plus, Trash2, RefreshCw, Palette, ArrowLeft } from 'lucide-react';
 import { compressImage } from '../services/imageOptimizer';
 import { uploadImageSecure } from '../services/api'; // NEW: Secure API
