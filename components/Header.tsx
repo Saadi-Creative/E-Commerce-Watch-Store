@@ -4,14 +4,22 @@ import { NavLink, Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../hooks/useAuth';
 import { User, Menu, X } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 // SECRET ADMIN PATH - Must match App.tsx
 const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || '';
 
 const Header: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
     const { cartCount } = useCart();
     const { isAdmin } = useAuth();
+
+    React.useEffect(() => {
+        const handleScroll = () => setScrolled(window.scrollY > 20);
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const activeLinkClass = 'text-yellow-500 font-semibold';
     const inactiveLinkClass = 'text-white hover:text-yellow-500 transition-colors duration-300 font-medium';
@@ -26,9 +34,9 @@ const Header: React.FC = () => {
     ];
 
     return (
-        <header className="fixed w-full top-0 z-50 transition-all duration-300 bg-brand-dark/95 border-b border-white/5 shadow-lg">
+        <header className={`fixed w-full top-0 z-50 transition-all duration-300 border-b border-white/5 shadow-lg ${scrolled ? 'backdrop-blur-md bg-gray-900/80' : 'bg-brand-dark/95'}`}>
             <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-20">
+                <div className={`flex items-center justify-between transition-all duration-300 ${scrolled ? 'h-16' : 'h-20'}`}>
 
                     {/* --- LEFT: LOGO --- */}
                     <div className="flex-shrink-0 flex items-center">
@@ -82,9 +90,15 @@ const Header: React.FC = () => {
                         <Link to="/cart" className="relative text-white hover:text-yellow-500 transition-colors duration-300 p-2">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                             {cartCount > 0 && (
-                                <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-yellow-500 text-gray-900 text-xs flex items-center justify-center font-bold animate-bounce">
+                                <motion.span 
+                                    key={cartCount}
+                                    initial={{ scale: 0.5 }}
+                                    animate={{ scale: [1, 1.4, 1] }}
+                                    transition={{ duration: 0.3 }}
+                                    className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-yellow-500 text-gray-900 text-xs flex items-center justify-center font-bold shadow-md"
+                                >
                                     {cartCount}
-                                </span>
+                                </motion.span>
                             )}
                         </Link>
 

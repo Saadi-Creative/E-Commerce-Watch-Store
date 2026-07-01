@@ -40,12 +40,56 @@ import NotFound from './pages/NotFound';
 // SECRET ADMIN PATH - Read from environment variable
 const ADMIN_PATH = import.meta.env.VITE_ADMIN_PATH || '';
 
+import { AnimatePresence } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
+import PageTransition from './components/PageTransition';
+
 // Loading Component
 const PageLoader = () => (
   <div className="min-h-[60vh] flex flex-col items-center justify-center bg-gray-900">
     <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-yellow-500 mb-4"></div>
   </div>
 );
+
+const AnimatedRoutes = () => {
+  const location = useLocation();
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        {/* === 1. CLIENT WEBSITE === */}
+        <Route element={<MainLayout />}>
+          <Route element={<ClientRoute />}>
+            <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+            <Route path="/shop" element={<PageTransition><Shop /></PageTransition>} />
+            <Route path="/about" element={<PageTransition><About /></PageTransition>} />
+            <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
+            <Route path="/faq" element={<PageTransition><FAQ /></PageTransition>} />
+            <Route path="/cart" element={<PageTransition><CartPage /></PageTransition>} />
+            <Route path="/checkout" element={<PageTransition><CheckoutPage /></PageTransition>} />
+            <Route path="/product/:id" element={<PageTransition><ProductDetailsPage /></PageTransition>} />
+            <Route path="/confirmation/:method" element={<PageTransition><OrderConfirmation /></PageTransition>} />
+            <Route path="/reviews" element={<PageTransition><ReviewsPage /></PageTransition>} />
+            <Route path="/my-orders" element={<PageTransition><MyOrders /></PageTransition>} />
+          </Route>
+        </Route>
+
+        {/* === 2. HIDDEN ADMIN PANEL (Secret URL) === */}
+        <Route path={`/${ADMIN_PATH}`} element={<PageTransition><AdminLogin /></PageTransition>} />
+
+        <Route element={<AdminLayout />}>
+          <Route element={<AdminRoute />}>
+            <Route path={`/${ADMIN_PATH}/add`} element={<PageTransition><AddProduct /></PageTransition>} />
+            <Route path={`/${ADMIN_PATH}/inventory`} element={<PageTransition><ManageInventory /></PageTransition>} />
+            <Route path={`/${ADMIN_PATH}/edit/:id`} element={<PageTransition><EditProduct /></PageTransition>} />
+          </Route>
+        </Route>
+
+        {/* === 3. CATCH-ALL 404 === */}
+        <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
+      </Routes>
+    </AnimatePresence>
+  );
+};
 
 const App: React.FC = () => {
   return (
@@ -56,40 +100,7 @@ const App: React.FC = () => {
             <Analytics />
             <ScrollToTop /> {/* New helper for scroll restoration */}
             <Suspense fallback={<PageLoader />}>
-              <Routes>
-
-                {/* === 1. CLIENT WEBSITE === */}
-                <Route element={<MainLayout />}>
-                  <Route element={<ClientRoute />}>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/shop" element={<Shop />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/faq" element={<FAQ />} />
-                    <Route path="/cart" element={<CartPage />} />
-                    <Route path="/checkout" element={<CheckoutPage />} />
-                    <Route path="/product/:id" element={<ProductDetailsPage />} />
-                    <Route path="/confirmation/:method" element={<OrderConfirmation />} />
-                    <Route path="/reviews" element={<ReviewsPage />} />
-                    <Route path="/my-orders" element={<MyOrders />} />
-                  </Route>
-                </Route>
-
-                {/* === 2. HIDDEN ADMIN PANEL (Secret URL) === */}
-                <Route path={`/${ADMIN_PATH}`} element={<AdminLogin />} />
-
-                <Route element={<AdminLayout />}>
-                  <Route element={<AdminRoute />}>
-                    <Route path={`/${ADMIN_PATH}/add`} element={<AddProduct />} />
-                    <Route path={`/${ADMIN_PATH}/inventory`} element={<ManageInventory />} />
-                    <Route path={`/${ADMIN_PATH}/edit/:id`} element={<EditProduct />} />
-                  </Route>
-                </Route>
-
-                {/* === 3. CATCH-ALL 404 === */}
-                <Route path="*" element={<NotFound />} />
-
-              </Routes>
+              <AnimatedRoutes />
             </Suspense>
           </BrowserRouter>
         </CartProvider>

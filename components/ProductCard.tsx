@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Venus, Mars, Watch } from 'lucide-react';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
 import OptimizedImage from './OptimizedImage';
 
 interface Variant { color: string; images: string[]; }
@@ -22,6 +23,27 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = React.memo(({ product }) => {
+  // --- 3D Hover Logic ---
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rotateX = useTransform(y, [-150, 150], [8, -8]);
+  const rotateY = useTransform(x, [-150, 150], [-8, 8]);
+
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
+    x.set(mouseX - width / 2);
+    y.set(mouseY - height / 2);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
   // 1. Robust Image Logic
   let coverImage = 'https://placehold.co/300?text=No+Image'; // Fallback
   if (product.variants && product.variants.length > 0 && product.variants[0].images.length > 0) {
@@ -53,7 +75,14 @@ const ProductCard: React.FC<ProductCardProps> = React.memo(({ product }) => {
   const hasDiscount = discount > 0 && originalPrice > product.price;
 
   return (
-    <div className="group relative bg-gray-800 rounded-sm overflow-hidden transition-all duration-300 hover:shadow-lg border border-gray-700 hover:border-brand-gold/20 flex flex-col h-full">
+    <motion.div 
+      className="group relative bg-gray-800 rounded-sm overflow-hidden transition-all duration-300 hover:shadow-2xl border border-gray-700 hover:border-brand-gold/40 flex flex-col h-full z-10"
+      style={{ perspective: 1000, rotateX, rotateY }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      whileHover={{ scale: 1.02, zIndex: 20 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+    >
 
       {/* === Image Area === */}
       <Link to={`/product/${product.id}`} className="block relative aspect-[4/5] bg-gray-700 overflow-hidden">
@@ -110,7 +139,7 @@ const ProductCard: React.FC<ProductCardProps> = React.memo(({ product }) => {
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 });
 

@@ -3,7 +3,9 @@ import { db } from '../firebase';
 import { collection, getDocs } from '../firebase';
 import { ChevronDown, Filter, Search, X } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
+import { motion } from 'framer-motion';
 import ProductCard from '../components/ProductCard';
+import { SkeletonCard } from '../components/Skeleton';
 
 interface Variant { color: string; images: string[]; }
 
@@ -144,9 +146,18 @@ const Shop: React.FC = () => {
   }, []);
 
   if (loading) return (
-    <div className="min-h-[60vh] bg-gray-900 flex flex-col items-center justify-center">
-      <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-yellow-500 mb-4"></div>
-      <p className="text-white text-xl font-semibold">Curating Collection...</p>
+    <div className="bg-gray-900 min-h-screen pt-24 pb-12">
+      <div className="container mx-auto px-4">
+        <div className="h-[120px] mb-8 bg-gray-800 rounded-2xl animate-pulse"></div>
+        <div className="h-16 bg-gray-800 rounded-xl mb-8 animate-pulse"></div>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+          {[...Array(8)].map((_, i) => (
+            <div key={i} className="h-full aspect-[4/5] min-h-[300px]">
+              <SkeletonCard />
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 
@@ -228,13 +239,29 @@ const Shop: React.FC = () => {
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+            <motion.div 
+              initial="hidden" 
+              animate="visible" 
+              variants={{
+                visible: {
+                  transition: { staggerChildren: 0.1 }
+                }
+              }}
+              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6"
+            >
               {visibleProducts.map((product) => (
-                <div key={product.id} className="h-full">
+                <motion.div 
+                  key={product.id} 
+                  variants={{
+                    hidden: { opacity: 0, y: 30 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.4 } }
+                  }}
+                  className="h-full"
+                >
                   <ProductCard product={product} />
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
             {/* LOAD MORE BUTTON */}
             {visibleCount < filteredProducts.length && (

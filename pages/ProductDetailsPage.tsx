@@ -6,8 +6,10 @@ import { db } from '../firebase';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../hooks/useAuth';
 import { ShoppingCart, CheckCircle, ChevronLeft, ChevronRight, Package, ShieldAlert } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import SEO from '../components/SEO';
 import OptimizedImage from '../components/OptimizedImage';
+import { SkeletonDetails } from '../components/Skeleton';
 
 interface Variant { color: string; images: string[]; }
 interface Product {
@@ -220,7 +222,11 @@ const ProductDetailsPage: React.FC = () => {
     };
   }, [product]);
 
-  if (loading) return <div className="min-h-screen bg-gray-900 flex items-center justify-center text-white">Loading...</div>;
+  if (loading) return (
+    <div className="bg-gray-900 min-h-screen py-8 px-4 pt-24 flex items-center justify-center">
+      <SkeletonDetails />
+    </div>
+  );
   if (error) return <div className="text-center text-red-500 mt-20">{error}</div>;
   if (!product) return null;
 
@@ -323,14 +329,40 @@ const ProductDetailsPage: React.FC = () => {
                 <ShieldAlert className="mr-2" /> Admin View Only (Purchase Disabled)
               </div>
             ) : (
-              <button
+              <motion.button
+                whileTap={{ scale: 0.95 }}
                 onClick={handleAddToCart}
                 disabled={isAdded || product.stock === 0}
-                className={`w-full py-4 px-6 rounded-xl font-extrabold text-lg uppercase tracking-widest flex items-center justify-center shadow-xl transition-all transform hover:scale-[1.02] active:scale-95 ${isAdded ? 'bg-green-600 text-white' : product.stock === 0 ? 'bg-gray-600 cursor-not-allowed text-gray-400' : 'bg-yellow-500 text-gray-900 hover:bg-yellow-400'}`}
+                className={`relative overflow-hidden w-full h-14 rounded-xl font-extrabold text-lg uppercase tracking-widest flex items-center justify-center shadow-xl transition-all ${isAdded ? 'bg-green-600 text-white' : product.stock === 0 ? 'bg-gray-600 cursor-not-allowed text-gray-400' : 'bg-yellow-500 text-gray-900 hover:bg-yellow-400 hover:shadow-yellow-500/20'}`}
               >
-                {isAdded ? <CheckCircle className="mr-2" size={24} /> : <ShoppingCart className="mr-2" size={24} />}
-                {isAdded ? 'Added to Cart!' : product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
-              </button>
+                <AnimatePresence mode="wait">
+                  {isAdded ? (
+                    <motion.div
+                      key="added"
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: -20, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="flex items-center"
+                    >
+                      <CheckCircle className="mr-2" size={24} />
+                      Added to Cart!
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="add"
+                      initial={{ y: -20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: 20, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="flex items-center"
+                    >
+                      <ShoppingCart className="mr-2" size={24} />
+                      {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.button>
             )}
 
             <button onClick={() => navigate('/shop')} className="w-full mt-4 py-3 px-6 rounded-xl font-bold text-gray-400 hover:text-white hover:bg-gray-700 transition duration-300 flex items-center justify-center">
