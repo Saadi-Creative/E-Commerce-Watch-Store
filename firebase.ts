@@ -42,16 +42,16 @@ export const signInWithEmailAndPassword = async (authObj: any, email: string, _p
 export const db = {}; 
 
 const getStore = () => {
-  const data = localStorage.getItem('mockFirestore_v3');
+  const data = localStorage.getItem('mockFirestore_v4');
   if (data) return JSON.parse(data);
   return { products: {}, reviews: {}, orders: {} };
 };
 
 const saveStore = (store: any) => {
-  localStorage.setItem('mockFirestore_v3', JSON.stringify(store));
+  localStorage.setItem('mockFirestore_v4', JSON.stringify(store));
 };
 
-if (!localStorage.getItem('mockFirestore_v3')) {
+if (!localStorage.getItem('mockFirestore_v4')) {
   saveStore({
     products: {
       'p1': {
@@ -91,7 +91,7 @@ if (!localStorage.getItem('mockFirestore_v3')) {
         brand: 'Apple',
         gender: 'Unisex',
         stock: 8,
-        imageUrls: ['https://images.unsplash.com/photo-1434493789847-2f02b0c48289?auto=format&fit=crop&q=80&w=800'],
+        imageUrls: ['/images/watches/apple_watch_ultra.png'],
         createdAt: { seconds: Date.now() / 1000 - 20000 }
       },
       'p5': {
@@ -101,7 +101,7 @@ if (!localStorage.getItem('mockFirestore_v3')) {
         brand: 'Tag Heuer',
         gender: 'Male',
         stock: 4,
-        imageUrls: ['https://images.unsplash.com/photo-1587836374828-cb4387df3c7c?auto=format&fit=crop&q=80&w=800'],
+        imageUrls: ['/images/watches/tag_heuer_carrera.png'],
         createdAt: { seconds: Date.now() / 1000 - 25000 }
       },
       'p6': {
@@ -131,7 +131,7 @@ if (!localStorage.getItem('mockFirestore_v3')) {
         brand: 'Garmin',
         gender: 'Unisex',
         stock: 9,
-        imageUrls: ['https://images.unsplash.com/photo-1509741102003-ca59ec6a15ea?auto=format&fit=crop&q=80&w=800'],
+        imageUrls: ['/images/watches/garmin_fenix.png'],
         createdAt: { seconds: Date.now() / 1000 - 40000 }
       },
       'p9': {
@@ -151,7 +151,7 @@ if (!localStorage.getItem('mockFirestore_v3')) {
         brand: 'Fossil',
         gender: 'Female',
         stock: 10,
-        imageUrls: ['https://images.unsplash.com/photo-1508656934052-cd38221d6ebc?auto=format&fit=crop&q=80&w=800'],
+        imageUrls: ['/images/watches/fossil_smartwatch.png'],
         createdAt: { seconds: Date.now() / 1000 - 50000 }
       },
       'p11': {
